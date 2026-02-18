@@ -59,25 +59,27 @@ TEMPLATE = '''
         h1 {
             text-align: center;
             color: #4a4a4a;
-            margin-bottom: 16px;
-            font-size: 2.5em;
-            font-weight: 300;
+            margin-top: -12px; /* shift upward slightly */
+            margin-bottom: 12px; /* reduce space below */
+            font-size: 2em; /* slightly smaller */
+            font-weight: 600; /* make bold */
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .form-row {
             display: flex;
-            gap: 12px;
+            gap: 10px; /* slightly tighter gap between inputs */
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 6px; /* reduce vertical space between rows */
         }
         form {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
+            margin-top: 8px; /* shift rows slightly downward toward Live Log Stream */
+            margin-bottom: 12px; /* tighter space below form */
+            gap: 12px;
             flex-wrap: wrap;
         }
         label {
@@ -95,6 +97,11 @@ TEMPLATE = '''
             border: 2px solid #e9ecef;
             min-width: 220px;
         }
+        /* Narrower Environment dropdown */
+        #environment {
+            min-width: 140px;
+            width: 150px;
+        }
         select:focus {
             outline: none;
             border-color: #007bff;
@@ -105,6 +112,7 @@ TEMPLATE = '''
             color: white;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            margin-left: 48px; /* add horizontal tab space from Select Test Case dropdown */
         }
         #runBtn:hover:not(:disabled) {
             background: linear-gradient(45deg, #218838, #17a2b8);
@@ -134,7 +142,7 @@ TEMPLATE = '''
         }
         #logStreamContainer {
             display: none;
-            margin-top: 40px;
+            margin-top: 16px; /* reduce gap above log stream to bring it closer to form */
             animation: fadeInUp 0.6s ease-out;
         }
         @keyframes fadeInUp {
@@ -200,6 +208,7 @@ TEMPLATE = '''
             background: #e9ecef;
             cursor: not-allowed;
             color: #666;
+        }
         footer {
             text-align: center;
             margin-top: 40px;
@@ -225,6 +234,20 @@ TEMPLATE = '''
             #logStream {
                 height: 160px;
             }
+        }
+        .top-bar { display:flex; justify-content: space-between; align-items:center; margin-bottom: 8px; }
+        .top-bar-right { display:flex; align-items:center; gap:10px; }
+        .toggle-inline label { font-weight:600; font-size: 16px; }
+        .toggle-inline input[type="checkbox"] { transform: scale(1.2); }
+        /* Increase height of input boxes */
+        .input-field {
+            height: 10px;
+            padding: 12px 16px;
+            font-size: 16px;
+        }
+        /* Reduce width specifically for BKG_TEMP input */
+        #BKG_TEMP.input-field {
+            width: 120px;
         }
     </style>
     <script>
@@ -304,45 +327,109 @@ TEMPLATE = '''
             var testSelect = document.getElementById('test_file');
             var bkgNumInput = document.getElementById('BKG_NUM');
             var reeferInput = document.getElementById('REEFER_ID');
-            function applyDefaults() {
-                var selectedText = testSelect.options[testSelect.selectedIndex].text;
-                if (selectedText === 'QA2-V2BookingsAPI') {
-                    // show defaults as placeholder (light color), keep editable
-                    bkgNumInput.placeholder = 'TEJABKGSAPIV2';
-                    reeferInput.placeholder = 'RPLC0000001,RPLC0000002';
-                } else if (selectedText === 'QA2-V1BookingsAPI') {
-                    bkgNumInput.placeholder = 'TEJABKGSAPIV1';
-                    reeferInput.placeholder = 'FBWS0000001,FBWS0000002';
-                } else {
-                    // other: keep current placeholders
-                    bkgNumInput.placeholder = bkgNumInput.placeholder || '';
-                    reeferInput.placeholder = reeferInput.placeholder || '';
+            var bkgTempInput = document.getElementById('BKG_TEMP');
+            var envSelect = document.getElementById('environment');
+            var customToggle = document.getElementById('customToggle');
+
+            function determineDefaults() {
+                var selectedTest = testSelect.options[testSelect.selectedIndex].text;
+                var env = (envSelect && envSelect.value) ? envSelect.value.toUpperCase() : 'QA2';
+                if (selectedTest === 'BookingsAPI-V1') {
+                    if (env === 'INTEG') {
+                        return { reefer: 'CCHD0000001,CCHD0000002', bkgNum: 'INTEGBKGSAPIV1', bkgTemp: '-10' };
+                    }
+                    return { reefer: 'FBWS0000001,FBWS0000002', bkgNum: 'QA2BKGSAPIV1', bkgTemp: '-10' };
+                } else if (selectedTest === 'BookingsAPI-V2') {
+                    if (env === 'INTEG') {
+                        return { reefer: 'CCHD0000003,CCHD0000004', bkgNum: 'INTEGBKGSAPIV2', bkgTemp: '-10' };
+                    }
+                    return { reefer: 'RPLC0000001,RPLC0000002', bkgNum: 'QA2BKGSAPIV2', bkgTemp: '-10' };
+                }
+                return { reefer: '', bkgNum: '', bkgTemp: '' };
+            }
+
+            function setFieldDefaults(vals) {
+                // Always set placeholders
+                reeferInput.placeholder = vals.reefer;
+                bkgNumInput.placeholder = vals.bkgNum;
+                bkgTempInput.placeholder = vals.bkgTemp;
+                // Set values so they submit to backend when not custom
+                if (!customToggle.checked) {
+                    reeferInput.value = vals.reefer;
+                    bkgNumInput.value = vals.bkgNum;
+                    bkgTempInput.value = vals.bkgTemp;
                 }
             }
-            testSelect.addEventListener('change', applyDefaults);
+
+            function applyDefaults() {
+                var vals = determineDefaults();
+                setFieldDefaults(vals);
+                // Toggle readOnly based on custom mode
+                var readonly = !customToggle.checked;
+                [reeferInput, bkgNumInput, bkgTempInput].forEach(function(el){ el.readOnly = readonly; });
+            }
+
+            // Toggle behavior: enable editing when checked; restore defaults when unchecked
+            customToggle.addEventListener('change', function() {
+                if (!customToggle.checked) {
+                    setFieldDefaults(determineDefaults());
+                }
+                applyDefaults();
+            });
+            testSelect.addEventListener('change', function(){
+                if (!customToggle.checked) {
+                    setFieldDefaults(determineDefaults());
+                }
+                applyDefaults();
+            });
+            if (envSelect) envSelect.addEventListener('change', function(){
+                if (!customToggle.checked) {
+                    setFieldDefaults(determineDefaults());
+                }
+                applyDefaults();
+            });
+            // Initial
             applyDefaults();
         });
     </script>
 </head>
 <body>
     <div class="container">
-        <h1>QA2-Bookings API Testing</h1>
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <h1>Bookings API Testing</h1>
+            </div>
+            <div class="top-bar-right toggle-inline">
+                <input type="checkbox" id="customToggle" />
+                <label for="customToggle">Use custom values</label>
+            </div>
+        </div>
         <form id="testForm" onsubmit="runTest(event)">
             <div class="form-row">
                 <div class="input-group">
                     <label for="REEFER_ID">REEFER_ID (comma-separated):</label>
-                    <input class="input-field" type="text" name="REEFER_ID" id="REEFER_ID" placeholder="FBWS0000001,FBWS0000002" />
+                    <input class="input-field" type="text" name="REEFER_ID" id="REEFER_ID" />
                 </div>
                 <div class="input-group">
                     <label for="BKG_NUM">BKG_NUM:</label>
-                    <input class="input-field" type="text" name="BKG_NUM" id="BKG_NUM" placeholder="TEJABKGSAPIV1" />
+                    <input class="input-field" type="text" name="BKG_NUM" id="BKG_NUM" />
                 </div>
                 <div class="input-group">
                     <label for="BKG_TEMP">BKG_TEMP:</label>
-                    <input class="input-field" type="number" step="any" name="BKG_TEMP" id="BKG_TEMP" placeholder="-10" />
+                    <input class="input-field" type="number" step="any" name="BKG_TEMP" id="BKG_TEMP" />
                 </div>
             </div>
             <div class="form-row">
+                <div class="input-group">
+                    <label for="environment">Environment:</label>
+                    <select name="environment" id="environment">
+                        <option value="QA2" selected>QA2</option>
+                        <option value="INTEG">INTEG</option>
+                        <option value="ZIM-INTEG1">ZIM-INTEG1</option>
+                        <option value="ZIM-INTEG-2">ZIM-INTEG-2</option>
+                        <option value="PROD">PROD</option>
+                    </select>
+                </div>
                 <div class="input-group">
                     <label for="test_file">Select Test Case:</label>
                     <select name="test_file" id="test_file">
@@ -376,9 +463,9 @@ def index():
     test_files = []
     for f in test_files_raw:
         if 'V1' in f:
-            display = 'QA2-V1BookingsAPI'
+            display = 'BookingsAPI-V1'
         elif 'V2' in f:
-            display = 'QA2-V2BookingsAPI'
+            display = 'BookingsAPI-V2'
         else:
             display = f
         test_files.append((f, display))
@@ -387,6 +474,9 @@ def index():
 @app.route('/run', methods=['POST'])
 def run_test():
     test_file = request.form['test_file']
+    environment = request.form.get('environment', 'QA2')
+    # Export selected environment for tests
+    os.environ['TEST_ENV'] = environment
     test_path = os.path.join(TEST_CASES_DIR, test_file)
     # Clear the log file before running the test
     with open(LOG_FILE, 'w'):

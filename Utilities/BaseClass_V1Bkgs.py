@@ -3,7 +3,7 @@ import inspect
 import logging
 
 
-class QA2BookingAPIURLV1:
+class BookingAPIURLV1:
     def QA2BookingAPIV1URL(self, booking_number: str):
         """
         Build the booking API URL using a user-provided booking number.
@@ -11,8 +11,19 @@ class QA2BookingAPIURLV1:
         """
         booking_number = str(booking_number).strip()
 
-        base = "https://awsqa2.tms-orbcomm.com:64344/rcweb/v1/BookingMgmt/Bookings"
+        base = "https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings"
         return f"{base}/{booking_number}"
+
+    def INTEGBookingAPIV1URL(self, booking_number: str):
+        """
+        Build the booking API URL using a user-provided booking number.
+        Example booking_number: "BKG_V1@001"
+        """
+        booking_number = str(booking_number).strip()
+
+        base = "https://integ.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings"
+        return f"{base}/{booking_number}"
+
 
     def getlogger(self):
         logger = logging.getLogger(inspect.stack()[1][3])

@@ -1,5 +1,5 @@
 # python
-class QA2V1Booking:
+class V1Booking:
     def booking_v1(self, reefers, booked_temperature, action, shipper="ShipperEntity"):
         """
         Build booking XML using provided reefers and temperature.

@@ -1,4 +1,4 @@
-class QA2V2Booking:
+class V2Booking:
     def booking_v2(self, reefers, booked_temperature, action, shipper="Shipper Entity", temperature_qualifier="Celsius"):
         """
         Build V2 booking JSON using provided reefers, temperature, and action.

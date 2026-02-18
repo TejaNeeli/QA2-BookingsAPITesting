@@ -3,13 +3,14 @@ from typing import List, Optional
 import requests
 import random
 import string
+import os
 
-from TestData.QA2Booking_V2 import QA2V2Booking
-from TestData.QA2fleetapidata_V2 import QA2fleetAPIV2
-from Utilities.BaseClass_QA2V2Bkgs import QA2BookingAPIURLV2
+from TestData.Booking_V2 import V2Booking
+from TestData.Fleetapidata_V2 import fleetAuthorizationV2
+from Utilities.BaseClass_V2Bkgs import BookingAPIURLV2
 
 
-class BookingsAPIRequestsV2_QA2:
+class BookingsAPIRequestsV1:
     """
     Fixed class:
     - Requires user inputs for booking numbers and XML payloads.
@@ -26,7 +27,7 @@ class BookingsAPIRequestsV2_QA2:
         booking_number3: str,
         shipper: str = "ShipperEntity",
     ):
-        api = QA2BookingAPIURLV2()
+        api = BookingAPIURLV2()
         # Generate random alphanumeric booking numbers if not provided
         if booking_number2 is None:
             booking_number2 = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
@@ -36,10 +37,17 @@ class BookingsAPIRequestsV2_QA2:
         self.QA2Bkg2_V2URL = api.QA2BookingAPIV2URL(booking_number2)
         self.QA2Bkg3_V2URL = api.QA2BookingAPIV2URL(booking_number3)
 
-        self.header_apple = QA2fleetAPIV2().autho_apple()
+        self.INTEGBkg1_V2URL = api.INTEGBookingAPIV2URL(booking_number1)
+        self.INTEGBkg2_V2URL = api.INTEGBookingAPIV2URL(booking_number2)
+        self.INTEGBkg3_V2URL = api.INTEGBookingAPIV2URL(booking_number3)
+
+        self.header_apple = fleetAuthorizationV2().QA2_autho_apple()
+        self.header_cdhinternal = fleetAuthorizationV2().Integ_autho_cdhinterna()
+        # Cache selected environment (defaults to QA2)
+        self.environment = os.environ.get('TEST_ENV', 'QA2').upper()
         self.logger = api.getlogger()
 
-        builder = QA2V2Booking()
+        builder = V2Booking()
         random_temp = random.randint(-30, 30)
         # Extract reeferIds from reefers_initial
         reefers_ids = reefers_initial or []
@@ -63,10 +71,21 @@ class BookingsAPIRequestsV2_QA2:
             shipper=shipper,
         )
 
+    def _select_target(self, which: int = 1):
+        """Return (url, headers) based on selected environment and booking index (1/2/3)."""
+        if self.environment == "INTEG":
+            url = [self.INTEGBkg1_V2URL, self.INTEGBkg2_V2URL, self.INTEGBkg3_V2URL][which - 1]
+            headers = self.header_cdhinternal
+        else:
+            url = [self.QA2Bkg1_V2URL, self.QA2Bkg2_V2URL, self.QA2Bkg3_V2URL][which - 1]
+            headers = self.header_apple
+        return url, headers
+
     def assign_booking(self):
         try:
+            url, headers = self._select_target(1)
             response_1 = requests.post(
-                self.QA2Bkg1_V2URL, json=self.initial_request, headers=self.header_apple, verify=False, timeout=10
+                url, data=self.initial_request, headers=headers, verify=False, timeout=10
             )
             if response_1.status_code == 200:
                 self.logger.info("Booking created API request is Successful!")
@@ -82,13 +101,14 @@ class BookingsAPIRequestsV2_QA2:
 
     def get_booking(self):
         try:
-            response_2 = requests.get(self.QA2Bkg1_V2URL, headers=self.header_apple, verify=False, timeout=10)
+            url, headers = self._select_target(1)
+            response_2 = requests.get(url, headers=headers, verify=False, timeout=10)
             if response_2.status_code == 200:
                 self.logger.info("Get Booking API request is Successful!")
                 self.logger.info(response_2.json())
             else:
                 self.logger.error({"Error - status_code": response_2.status_code, "Error - text": response_2.text})
-                self.logger.warning("Get Booking API request request is Failed!")
+                self.logger.warning("Booking created API request is Failed!")
                 assert False, "Get Booking failed: status_code={}, text={}".format(response_2.status_code, response_2.text)
         except requests.exceptions.RequestException as e:
             self.logger.exception(f"API request failed: {e}")
@@ -96,14 +116,15 @@ class BookingsAPIRequestsV2_QA2:
 
     def update_booking(self):
         try:
+            url, headers = self._select_target(1)
             response_3 = requests.post(
-                self.QA2Bkg1_V2URL, json=self.update_request, headers=self.header_apple, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=10
             )
             if response_3.status_code == 200:
                 self.logger.info("Booking Updated API request is Successful!")
             else:
                 self.logger.error({"Error - status_code": response_3.status_code, "Error - text": response_3.text})
-                self.logger.warning("Booking Updated API request is Failed!")
+                self.logger.warning("Booking created API request is Failed!")
                 assert False, "Update Booking failed: status_code={}, text={}".format(
                     response_3.status_code, response_3.text
                 )
@@ -113,13 +134,14 @@ class BookingsAPIRequestsV2_QA2:
 
     def get_bookingupdate(self):
         try:
-            response_4 = requests.get(self.QA2Bkg1_V2URL, headers=self.header_apple, verify=False, timeout=10)
+            url, headers = self._select_target(1)
+            response_4 = requests.get(url, headers=headers, verify=False, timeout=10)
             if response_4.status_code == 200:
                 self.logger.info("Get Booking API request after Booking update is Successful!")
                 self.logger.info(response_4.json())
             else:
                 self.logger.error({"Error - status_code": response_4.status_code, "Error - text": response_4.text})
-                self.logger.warning("Get Booking API request after Booking update is Failed!")
+                self.logger.warning("Booking created API request is Failed!")
                 assert False, "Get Booking update failed: status_code={}, text={}".format(
                     response_4.status_code, response_4.text
                 )
@@ -129,8 +151,9 @@ class BookingsAPIRequestsV2_QA2:
 
     def assign_new_booking(self):
         try:
+            url, headers = self._select_target(2)
             response_5 = requests.put(
-                self.QA2Bkg2_V2URL, json=self.update_request, headers=self.header_apple, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=10
             )
             if response_5.status_code == 200:
                 self.logger.info("Assign New Booking API request is Successful!")
@@ -146,7 +169,8 @@ class BookingsAPIRequestsV2_QA2:
 
     def get_new_booking(self):
         try:
-            response_6 = requests.get(self.QA2Bkg2_V2URL, headers=self.header_apple, verify=False, timeout=10)
+            url, headers = self._select_target(2)
+            response_6 = requests.get(url, headers=headers, verify=False, timeout=10)
             if response_6.status_code == 200:
                 self.logger.info("Get New Booking API request is Successful!")
                 self.logger.info(response_6.json())
@@ -162,8 +186,9 @@ class BookingsAPIRequestsV2_QA2:
 
     def unassign_booking(self):
         try:
+            url, headers = self._select_target(2)
             response_7 = requests.post(
-                self.QA2Bkg2_V2URL, json=self.unassign_request, headers=self.header_apple, verify=False, timeout=10
+                url, data=self.unassign_request, headers=headers, verify=False, timeout=10
             )
             if response_7.status_code == 200:
                 self.logger.info("Unassign Booking API request is Successful!")
@@ -177,26 +202,11 @@ class BookingsAPIRequestsV2_QA2:
             self.logger.exception(f"API request failed: {e}")
             assert False, self.logger.warning("Unassign Booking API request is Failed!")
 
-    # def get_unassign_booking(self):
-    #     try:
-    #         response_8 = requests.get(self.QA2Bkg2_V1URL, headers=self.header_apple, verify=False, timeout=10)
-    #         if response_8.status_code == 200:
-    #             self.logger.info("Get New Booking API request is Successful!")
-    #             self.logger.info(response_8.json())
-    #         else:
-    #             self.logger.error({"Error - status_code": response_8.status_code, "Error - text": response_8.text})
-    #             self.logger.warning("Get New Booking API request is Failed!")
-    #             assert False, "Get New Booking failed: status_code={}, text={}".format(
-    #                 response_8.status_code, response_8.text
-    #             )
-    #     except requests.exceptions.RequestException as e:
-    #         self.logger.exception(f"API request failed: {e}")
-    #         assert False, self.logger.warning("Get New Booking API request is Failed!")
-
     def assign_new_bkg_put(self):
         try:
+            url, headers = self._select_target(3)
             response_9 = requests.put(
-                self.QA2Bkg3_V2URL, json=self.update_request, headers=self.header_apple, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=10
             )
             if response_9.status_code == 200:
                 self.logger.info("Assign New Booking Put API request is Successful!")
@@ -212,8 +222,9 @@ class BookingsAPIRequestsV2_QA2:
 
     def delete_booking(self):
         try:
+            url, headers = self._select_target(3)
             response_10 = requests.delete(
-                self.QA2Bkg3_V2URL, json=self.update_request, headers=self.header_apple, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=10
             )
             if response_10.status_code == 200:
                 self.logger.info("Delete Booking API request is Successful!")
