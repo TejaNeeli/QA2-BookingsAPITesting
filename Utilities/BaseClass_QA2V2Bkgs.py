@@ -2,16 +2,15 @@ import inspect
 import logging
 
 class QA2BookingAPIURLV2:
-    def QA2BookingAPIV2URL_1(self):
-        return "https://awsqa2.tms-orbcomm.com:44344/rcweb/v2/BookingMgmt/Bookings/LRAA_BKG110226013"
-    def QA2BookingAPIV2URL_2(self):
-        return "https://awsqa2.tms-orbcomm.com:44344/rcweb/v2/BookingMgmt/Bookings/LRAA_BKG110226014"
-    def QA2BookingAPIV2URL_3(self):
-        return "https://awsqa2.tms-orbcomm.com:44344/rcweb/v2/BookingMgmt/Bookings/LRAA_BKG110226015"
-    def QA2BookingAPIV2URL_4(self):
-        return "https://awsqa2.tms-orbcomm.com:44344/rcweb/v2/BookingMgmt/Bookings/LRAA_BKG110226016"
-    def QA2BookingAPIV2URL_5(self):
-        return "https://awsqa2.tms-orbcomm.com:44344/rcweb/v2/BookingMgmt/Bookings/LRAA_BKG110226017"
+    def QA2BookingAPIV2URL(self, booking_number: str):
+        """
+        Build the booking API URL using a user-provided booking number.
+        Example booking_number: "BKG_V1@001"
+        """
+        booking_number = str(booking_number).strip()
+
+        base = "https://awsqa2.tms-orbcomm.com:64344/rcweb/v2/BookingMgmt/Bookings"
+        return f"{base}/{booking_number}"
 
     def getlogger(self):
         logger = logging.getLogger(inspect.stack()[1][3])  # Use the calling method name as the logger name

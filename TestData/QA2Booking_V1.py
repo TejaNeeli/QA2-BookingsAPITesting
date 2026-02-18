@@ -1,61 +1,36 @@
+# python
 class QA2V1Booking:
-    def QA2BookingV1initial(self):
-        return """
-    <booking>
+    def booking_v1(self, reefers, booked_temperature, action, shipper="ShipperEntity"):
+        """
+        Build booking XML using provided reefers and temperature.
+        reefers: list of reeferIds like ["FBWS0000001", ...]
+        booked_temperature: int or str from user input
+        action: "associate" or "dissociate"
+        shipper: optional shipper name
+        """
+        if action.lower() not in {"associate", "dissociate"}:
+            raise ValueError("Invalid action: must be 'associate' or 'dissociate'")
+        items = []
+        for r in reefers:
+            rid = str(r).strip()
+            if not rid:
+                raise ValueError("Invalid reeferId: cannot be empty")
+            items.append(
+                f"""
         <reefers>
             <reefer>
-                <action>associate</action>
-                <reeferId>FBWS0000001</reeferId>
+                <action>{action.lower()}</action>
+                <reeferId>{rid}</reeferId>
                 <cargoCare />
             </reefer>
-        </reefers>
-        <reefers>
-            <reefer>
-                <action>associate</action>
-                <reeferId>FBWS0000003</reeferId>
-                <cargoCare />
-            </reefer>
-        </reefers>
-        <bookedTemperature>36</bookedTemperature>
-        <Shipper>ShipperEntity</Shipper>
-    </booking>"""
+        </reefers>"""
+            )
 
-    def QA2BookingV1Update(self):
-        return """
-        <booking>
-            <reefers>
-                <reefer>
-                    <action>associate</action>
-                    <reeferId>FBWS0000001</reeferId>
-                    <cargoCare />
-                </reefer>
-            </reefers>
-            <reefers>
-                <reefer>
-                    <action>associate</action>
-                    <reeferId>FBWS0000003</reeferId>
-                    <cargoCare />
-                </reefer>
-            </reefers>
-            <bookedTemperature>39</bookedTemperature>
-            <Shipper>ShipperEntity</Shipper>
-        </booking>"""
-
-    def QA2BookingV1Unassign(self):
-        return """
-    <booking>
-        <reefers>
-            <reefer>
-                <action>dissociate</action>
-                <reeferId>FBWS0000001</reeferId>
-                <cargoCare />
-            </reefer>
-            <reefer>
-                <action>associate</action>
-                <reeferId>FBWS0000003</reeferId>
-                <cargoCare />
-            </reefer>
-        </reefers>
-        <bookedTemperature>39</bookedTemperature>
-        <Shipper>ShipperEntity</Shipper>
+        return (
+            f"""<booking>{''.join(items)}
+        <bookedTemperature>{booked_temperature}</bookedTemperature>
+        <Shipper>{shipper}</Shipper>
     </booking>"""
+        )
+
+

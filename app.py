@@ -32,6 +32,7 @@ TEMPLATE = '''
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden; /* prevent vertical scroll */
             color: #333;
             animation: fadeIn 1s ease-in;
         }
@@ -44,8 +45,8 @@ TEMPLATE = '''
             backdrop-filter: blur(10px);
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 900px;
+            padding: 24px; /* compact padding to fit viewport */
+            max-width: 1100px;
             width: 100%;
             margin: 20px;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -58,10 +59,18 @@ TEMPLATE = '''
         h1 {
             text-align: center;
             color: #4a4a4a;
-            margin-bottom: 30px;
+            margin-bottom: 16px;
             font-size: 2.5em;
             font-weight: 300;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 12px;
         }
         form {
             display: flex;
@@ -76,16 +85,15 @@ TEMPLATE = '''
             color: #555;
         }
         select, button {
-            padding: 12px 18px;
-            border: none;
+            padding: 10px 14px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.3s ease;
         }
         select {
             background: #f8f9fa;
             border: 2px solid #e9ecef;
-            min-width: 200px;
+            min-width: 220px;
         }
         select:focus {
             outline: none;
@@ -114,10 +122,10 @@ TEMPLATE = '''
             border: 6px solid #f3f3f3;
             border-top: 6px solid #007bff;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 30px auto;
+            margin: 12px auto;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         @keyframes spin {
@@ -141,9 +149,9 @@ TEMPLATE = '''
         #logStream {
             background: white;
             color: #555;
-            padding: 20px;
+            padding: 10px;
             border-radius: 10px;
-            height: 500px;
+            height: 220px; /* reduce height to avoid scroll */
             width: 100%;
             overflow-y: auto;
             font-family: 'Fira Code', 'Courier New', monospace;
@@ -188,6 +196,10 @@ TEMPLATE = '''
             transform: none;
             box-shadow: none;
         }
+        .input-field[readonly], .input-field[disabled] {
+            background: #e9ecef;
+            cursor: not-allowed;
+            color: #666;
         footer {
             text-align: center;
             margin-top: 40px;
@@ -198,12 +210,12 @@ TEMPLATE = '''
         }
         @media (max-width: 600px) {
             .container {
-                padding: 25px;
+                padding: 18px;
             }
             h1 {
                 font-size: 2em;
             }
-            form {
+            .form-row {
                 flex-direction: column;
             }
             select, button {
@@ -211,7 +223,7 @@ TEMPLATE = '''
                 min-width: unset;
             }
             #logStream {
-                height: 250px;
+                height: 160px;
             }
         }
     </style>
@@ -287,25 +299,66 @@ TEMPLATE = '''
         function downloadReport() {
             window.location.href = '/download/report';
         }
+        // Set defaults based on selected test case
+        document.addEventListener('DOMContentLoaded', function() {
+            var testSelect = document.getElementById('test_file');
+            var bkgNumInput = document.getElementById('BKG_NUM');
+            var reeferInput = document.getElementById('REEFER_ID');
+            function applyDefaults() {
+                var selectedText = testSelect.options[testSelect.selectedIndex].text;
+                if (selectedText === 'QA2-V2BookingsAPI') {
+                    // show defaults as placeholder (light color), keep editable
+                    bkgNumInput.placeholder = 'TEJABKGSAPIV2';
+                    reeferInput.placeholder = 'RPLC0000001,RPLC0000002';
+                } else if (selectedText === 'QA2-V1BookingsAPI') {
+                    bkgNumInput.placeholder = 'TEJABKGSAPIV1';
+                    reeferInput.placeholder = 'FBWS0000001,FBWS0000002';
+                } else {
+                    // other: keep current placeholders
+                    bkgNumInput.placeholder = bkgNumInput.placeholder || '';
+                    reeferInput.placeholder = reeferInput.placeholder || '';
+                }
+            }
+            testSelect.addEventListener('change', applyDefaults);
+            applyDefaults();
+        });
     </script>
 </head>
 <body>
     <div class="container">
         <h1>QA2-Bookings API Testing</h1>
         <form id="testForm" onsubmit="runTest(event)">
-            <label for="test_file">Select Test Case:</label>
-            <select name="test_file" id="test_file">
-                {% for test_file in test_files %}
-                    <option value="{{ test_file[0] }}">{{ test_file[1] }}</option>
-                {% endfor %}
-            </select>
-            <button id="runBtn" type="submit">Run Test</button>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="REEFER_ID">REEFER_ID (comma-separated):</label>
+                    <input class="input-field" type="text" name="REEFER_ID" id="REEFER_ID" placeholder="FBWS0000001,FBWS0000002" />
+                </div>
+                <div class="input-group">
+                    <label for="BKG_NUM">BKG_NUM:</label>
+                    <input class="input-field" type="text" name="BKG_NUM" id="BKG_NUM" placeholder="TEJABKGSAPIV1" />
+                </div>
+                <div class="input-group">
+                    <label for="BKG_TEMP">BKG_TEMP:</label>
+                    <input class="input-field" type="number" step="any" name="BKG_TEMP" id="BKG_TEMP" placeholder="-10" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="test_file">Select Test Case:</label>
+                    <select name="test_file" id="test_file">
+                        {% for test_file in test_files %}
+                            <option value="{{ test_file[0] }}">{{ test_file[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button id="runBtn" type="submit">Run Test</button>
+            </div>
         </form>
         <div id="loader"></div>
         <div id="output"></div>
         <div id="logStreamContainer" style="display:none;">
             <h2>Live Log Stream</h2>
-            <pre id="logStream" style="background:#222;color:#eee;padding:10px;height:200px;overflow:auto;"></pre>
+            <pre id="logStream" style="background:#222;color:#eee;padding:10px;overflow:auto;"></pre>
             <div class="download-section">
                 <button id="downloadConsole" onclick="downloadConsole()" class="download-btn"><i class="fas fa-file-download"></i> Download Console Output</button>
                 <button id="downloadLog" onclick="downloadLog()" class="download-btn"><i class="fas fa-file-alt"></i> Download Log File</button>
@@ -346,7 +399,15 @@ def run_test():
         '--log-format=%(asctime)s %(levelname)s %(message)s',
         '--log-date-format=%Y-%m-%d %H:%M:%S'
     ]
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    # Prepare environment variables for subprocess, including user-specified values
+    env = os.environ.copy()
+    if request.form.get('REEFER_ID'):
+        env['REEFER_ID'] = request.form.get('REEFER_ID')
+    if request.form.get('BKG_NUM'):
+        env['BKG_NUM'] = request.form.get('BKG_NUM')
+    if request.form.get('BKG_TEMP'):
+        env['BKG_TEMP'] = request.form.get('BKG_TEMP')
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=env)
     stdout, stderr = proc.communicate()
     output = stdout + '\n' + stderr
     return jsonify({'output': output})
