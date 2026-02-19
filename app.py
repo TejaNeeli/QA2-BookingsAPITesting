@@ -161,15 +161,13 @@ TEMPLATE = '''
             border-radius: 10px;
             height: 220px; /* reduce height to avoid scroll */
             width: 100%;
+            overflow-x: auto;
             overflow-y: auto;
             font-family: 'Fira Code', 'Courier New', monospace;
             font-size: 14px;
             line-height: 1.5;
             border: 1px solid #ddd;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        #logStream::-webkit-scrollbar {
-            display: none;
         }
         .download-section {
             margin-top: 25px;
@@ -278,14 +276,15 @@ TEMPLATE = '''
             startLoader();
             var form = document.getElementById('testForm');
             var formData = new FormData(form);
-            document.getElementById('logStream').textContent = '';
+            document.getElementById('logStream').innerHTML = '';
             if (es) { es.close(); }
             es = new EventSource('/stream-log');
             var firstMessage = true;
             es.onmessage = function(e) {
                 var logStream = document.getElementById('logStream');
-                if (!logStream.textContent.endsWith(e.data + "\\n")) {
-                    logStream.textContent += e.data + "\\n";
+                var coloredLine = colorizeLogLine(e.data);
+                if (!logStream.innerHTML.includes(coloredLine + "<br>")) {
+                    logStream.innerHTML += coloredLine + "<br>";
                     logStream.scrollTop = logStream.scrollHeight;
                     if (firstMessage) {
                         stopLoader();
@@ -308,6 +307,17 @@ TEMPLATE = '''
                 stopLoader();
                 alert('Error running test case.');
             });
+        }
+        function colorizeLogLine(line) {
+            if (line.includes(' INFO ')) {
+                return line.replace(' INFO ', ' <span style="color: yellow;">INFO</span> ');
+            } else if (line.includes(' ERROR ')) {
+                return line.replace(' ERROR ', ' <span style="color: red;">ERROR</span> ');
+            } else if (line.includes(' WARNING ')) {
+                return line.replace(' WARNING ', ' <span style="color: red;">WARNING</span> ');
+            } else {
+                return line;
+            }
         }
         function downloadConsole() {
             var blob = new Blob([window.consoleOutput || ''], {type: 'text/plain'});
@@ -337,11 +347,23 @@ TEMPLATE = '''
                 if (selectedTest === 'BookingsAPI-V1') {
                     if (env === 'INTEG') {
                         return { reefer: 'CCHD0000001,CCHD0000002', bkgNum: 'INTEGBKGSAPIV1', bkgTemp: '-10' };
+                    } else if (env === 'ZIMINTEG1') {
+                        return { reefer: 'ZMOU8914435', bkgNum: 'ZIMINTEG1BKGSAPIV1', bkgTemp: '-10' };
+                    } else if (env === 'ZIMINTEG2') {
+                        return { reefer: 'ZCLU9910407', bkgNum: 'ZIMINTEG2BKGSAPIV1', bkgTemp: '-10' };
+                    } else if (env === 'PROD') {
+                        return { reefer: 'AWSA0000002,AWSA0000003', bkgNum: 'PRODBKGSAPIV1', bkgTemp: '-10' };
                     }
                     return { reefer: 'FBWS0000001,FBWS0000002', bkgNum: 'QA2BKGSAPIV1', bkgTemp: '-10' };
                 } else if (selectedTest === 'BookingsAPI-V2') {
                     if (env === 'INTEG') {
                         return { reefer: 'CCHD0000003,CCHD0000004', bkgNum: 'INTEGBKGSAPIV2', bkgTemp: '-10' };
+                    } else if (env === 'ZIMINTEG1') {
+                        return { reefer: 'ZMOU8914498', bkgNum: 'ZIMINTEG1BKGSAPIV2', bkgTemp: '-10' };
+                    } else if (env === 'ZIMINTEG2') {
+                        return { reefer: 'ZCLU9910351', bkgNum: 'ZIMINTEG2BKGSAPIV2', bkgTemp: '-10' };
+                    } else if (env === 'PROD') {
+                        return { reefer: 'VCVC2222221,AWSA0000001', bkgNum: 'PRODBKGSAPIV2', bkgTemp: '-10' };
                     }
                     return { reefer: 'RPLC0000001,RPLC0000002', bkgNum: 'QA2BKGSAPIV2', bkgTemp: '-10' };
                 }
@@ -425,8 +447,8 @@ TEMPLATE = '''
                     <select name="environment" id="environment">
                         <option value="QA2" selected>QA2</option>
                         <option value="INTEG">INTEG</option>
-                        <option value="ZIM-INTEG1">ZIM-INTEG1</option>
-                        <option value="ZIM-INTEG-2">ZIM-INTEG-2</option>
+                        <option value="ZIMINTEG1">ZIM-INTEG1</option>
+                        <option value="ZIMINTEG2">ZIM-INTEG2</option>
                         <option value="PROD">PROD</option>
                     </select>
                 </div>

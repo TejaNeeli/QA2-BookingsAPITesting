@@ -10,7 +10,7 @@ from TestData.Fleetapidata_V2 import fleetAuthorizationV2
 from Utilities.BaseClass_V2Bkgs import BookingAPIURLV2
 
 
-class BookingsAPIRequestsV1:
+class BookingsAPIRequestsV2:
     """
     Fixed class:
     - Requires user inputs for booking numbers and XML payloads.
@@ -41,8 +41,23 @@ class BookingsAPIRequestsV1:
         self.INTEGBkg2_V2URL = api.INTEGBookingAPIV2URL(booking_number2)
         self.INTEGBkg3_V2URL = api.INTEGBookingAPIV2URL(booking_number3)
 
+        self.ZIMINTEG1Bkg1_V2URL = api.ZIMINTEG1BookingAPIV2URL(booking_number1)
+        self.ZIMINTEG1Bkg2_V2URL = api.ZIMINTEG1BookingAPIV2URL(booking_number2)
+        self.ZIMINTEG1Bkg3_V2URL = api.ZIMINTEG1BookingAPIV2URL(booking_number3)
+
+        self.ZIMINTEG2Bkg1_V2URL = api.ZIMINTEG2BookingAPIV2URL(booking_number1)
+        self.ZIMINTEG2Bkg2_V2URL = api.ZIMINTEG2BookingAPIV2URL(booking_number2)
+        self.ZIMINTEG2Bkg3_V2URL = api.ZIMINTEG2BookingAPIV2URL(booking_number3)
+
+        self.PRODBkg1_V2URL = api.PRODBookingAPIV2URL(booking_number1)
+        self.PRODBkg2_V2URL = api.PRODBookingAPIV2URL(booking_number2)
+        self.PRODBkg3_V2URL = api.PRODBookingAPIV2URL(booking_number3)
+
         self.header_apple = fleetAuthorizationV2().QA2_autho_apple()
         self.header_cdhinternal = fleetAuthorizationV2().Integ_autho_cdhinterna()
+        self.header_ziminteg1fleet1 = fleetAuthorizationV2().ZimInteg1_autho_integ1fleet1()
+        self.header_ziminteg2fleet1 = fleetAuthorizationV2().ZimInteg2_autho_integ2fleet1()
+        self.header_prod = fleetAuthorizationV2().Prod_autho_vcfleet()
         # Cache selected environment (defaults to QA2)
         self.environment = os.environ.get('TEST_ENV', 'QA2').upper()
         self.logger = api.getlogger()
@@ -76,7 +91,16 @@ class BookingsAPIRequestsV1:
         if self.environment == "INTEG":
             url = [self.INTEGBkg1_V2URL, self.INTEGBkg2_V2URL, self.INTEGBkg3_V2URL][which - 1]
             headers = self.header_cdhinternal
-        else:
+        elif self.environment == "ZIMINTEG1":
+            url = [self.ZIMINTEG1Bkg1_V2URL, self.ZIMINTEG1Bkg2_V2URL, self.ZIMINTEG1Bkg3_V2URL][which - 1]
+            headers = self.header_ziminteg1fleet1
+        elif self.environment == "ZIMINTEG2":
+            url = [self.ZIMINTEG2Bkg1_V2URL, self.ZIMINTEG2Bkg2_V2URL, self.ZIMINTEG2Bkg3_V2URL][which - 1]
+            headers = self.header_ziminteg2fleet1
+        elif self.environment == "PROD":
+            url = [self.PRODBkg1_V2URL, self.PRODBkg2_V2URL, self.PRODBkg3_V2URL][which - 1]
+            headers = self.header_prod
+        else:  # Default to QA2
             url = [self.QA2Bkg1_V2URL, self.QA2Bkg2_V2URL, self.QA2Bkg3_V2URL][which - 1]
             headers = self.header_apple
         return url, headers
@@ -85,8 +109,9 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(1)
             response_1 = requests.post(
-                url, data=self.initial_request, headers=headers, verify=False, timeout=10
+                url, json=self.initial_request, headers=headers, verify=False, timeout=10
             )
+            self.logger.info(f"API Request: POST {url} - Status Code: {response_1.status_code}")
             if response_1.status_code == 200:
                 self.logger.info("Booking created API request is Successful!")
             else:
@@ -103,6 +128,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(1)
             response_2 = requests.get(url, headers=headers, verify=False, timeout=10)
+            self.logger.info(f"API Request: GET {url} - Status Code: {response_2.status_code}")
             if response_2.status_code == 200:
                 self.logger.info("Get Booking API request is Successful!")
                 self.logger.info(response_2.json())
@@ -118,8 +144,9 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(1)
             response_3 = requests.post(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, json=self.update_request, headers=headers, verify=False, timeout=10
             )
+            self.logger.info(f"API Request: POST {url} - Status Code: {response_3.status_code}")
             if response_3.status_code == 200:
                 self.logger.info("Booking Updated API request is Successful!")
             else:
@@ -136,6 +163,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(1)
             response_4 = requests.get(url, headers=headers, verify=False, timeout=10)
+            self.logger.info(f"API Request: GET {url} - Status Code: {response_4.status_code}")
             if response_4.status_code == 200:
                 self.logger.info("Get Booking API request after Booking update is Successful!")
                 self.logger.info(response_4.json())
@@ -153,8 +181,9 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(2)
             response_5 = requests.put(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, json=self.update_request, headers=headers, verify=False, timeout=10
             )
+            self.logger.info(f"API Request: PUT {url} - Status Code: {response_5.status_code}")
             if response_5.status_code == 200:
                 self.logger.info("Assign New Booking API request is Successful!")
             else:
@@ -171,6 +200,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(2)
             response_6 = requests.get(url, headers=headers, verify=False, timeout=10)
+            self.logger.info(f"API Request: GET {url} - Status Code: {response_6.status_code}")
             if response_6.status_code == 200:
                 self.logger.info("Get New Booking API request is Successful!")
                 self.logger.info(response_6.json())
@@ -188,8 +218,9 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(2)
             response_7 = requests.post(
-                url, data=self.unassign_request, headers=headers, verify=False, timeout=10
+                url, json=self.unassign_request, headers=headers, verify=False, timeout=10
             )
+            self.logger.info(f"API Request: POST {url} - Status Code: {response_7.status_code}")
             if response_7.status_code == 200:
                 self.logger.info("Unassign Booking API request is Successful!")
             else:
@@ -206,8 +237,9 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(3)
             response_9 = requests.put(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, json=self.update_request, headers=headers, verify=False, timeout=10
             )
+            self.logger.info(f"API Request: PUT {url} - Status Code: {response_9.status_code}")
             if response_9.status_code == 200:
                 self.logger.info("Assign New Booking Put API request is Successful!")
             else:
@@ -224,8 +256,9 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(3)
             response_10 = requests.delete(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, json=self.update_request, headers=headers, verify=False, timeout=10
             )
+            self.logger.info(f"API Request: DELETE {url} - Status Code: {response_10.status_code}")
             if response_10.status_code == 200:
                 self.logger.info("Delete Booking API request is Successful!")
             else:
