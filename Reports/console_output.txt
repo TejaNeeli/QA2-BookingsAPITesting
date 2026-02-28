@@ -1,0 +1,1842 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.1, pytest-8.0.2, pluggy-1.4.0
+rootdir: C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation
+plugins: anyio-4.12.1, html-4.1.1, log-1.0, metadata-3.1.1, order-1.3.0, xdist-3.8.0
+collected 9 items
+
+TestCases\test_V1BookingsAPI.py --- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 60, in test_assign_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).assign_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 114, in assign_booking
+    self.logger.info(f"API Request: POST {url} - Status Code: {response_1.status_code}")
+Message: 'API Request: POST https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 60, in test_assign_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).assign_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 116, in assign_booking
+    self.logger.info("Booking created API request is Successful!")
+Message: 'Booking created API request is Successful!'
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 64, in test_get_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 131, in get_booking
+    self.logger.info(f"API Request: GET {url} - Status Code: {response_2.status_code}")
+Message: 'API Request: GET https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 64, in test_get_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 133, in get_booking
+    self.logger.info("Get Booking API request is Successful!")
+Message: 'Get Booking API request is Successful!'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 64, in test_get_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 134, in get_booking
+    self.logger.info(response_2.json())
+Message: {'bookingNumber': 'QA2BKGSAPIV1', 'reefers': [{'reeferId': 'FBWS0000002', 'cargoCare': '', 'accessCodes': {'accessCode': []}}, {'reeferId': 'FBWS0000001', 'cargoCare': '', 'accessCodes': {'accessCode': []}}], 'bookedTemperature': '-10', 'bookedTemperatureQualifier': 'C', 'commodity': '', 'shipper': '', 'consignee': '', 'customer': '', 'STCC': '', 'gensetId': ''}
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 68, in test_update_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).update_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 149, in update_booking
+    self.logger.info(f"API Request: POST {url} - Status Code: {response_3.status_code}")
+Message: 'API Request: POST https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 68, in test_update_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).update_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 151, in update_booking
+    self.logger.info("Booking Updated API request is Successful!")
+Message: 'Booking Updated API request is Successful!'
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 72, in test_get_bookingupdate
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_bookingupdate()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 166, in get_bookingupdate
+    self.logger.info(f"API Request: GET {url} - Status Code: {response_4.status_code}")
+Message: 'API Request: GET https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 72, in test_get_bookingupdate
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_bookingupdate()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 168, in get_bookingupdate
+    self.logger.info("Get Booking API request after Booking update is Successful!")
+Message: 'Get Booking API request after Booking update is Successful!'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 72, in test_get_bookingupdate
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_bookingupdate()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 169, in get_bookingupdate
+    self.logger.info(response_4.json())
+Message: {'bookingNumber': 'QA2BKGSAPIV1', 'reefers': [{'reeferId': 'FBWS0000002', 'cargoCare': '', 'accessCodes': {'accessCode': []}}, {'reeferId': 'FBWS0000001', 'cargoCare': '', 'accessCodes': {'accessCode': []}}], 'bookedTemperature': '-20', 'bookedTemperatureQualifier': 'C', 'commodity': '', 'shipper': '', 'consignee': '', 'customer': '', 'STCC': '', 'gensetId': ''}
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 76, in test_assign_new_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).assign_new_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 186, in assign_new_booking
+    self.logger.info(f"API Request: PUT {url} - Status Code: {response_5.status_code}")
+Message: 'API Request: PUT https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 76, in test_assign_new_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).assign_new_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 188, in assign_new_booking
+    self.logger.info("Assign New Booking API request is Successful!")
+Message: 'Assign New Booking API request is Successful!'
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 80, in test_get_new_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_new_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 203, in get_new_booking
+    self.logger.info(f"API Request: GET {url} - Status Code: {response_6.status_code}")
+Message: 'API Request: GET https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 80, in test_get_new_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_new_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 205, in get_new_booking
+    self.logger.info("Get New Booking API request is Successful!")
+Message: 'Get New Booking API request is Successful!'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 80, in test_get_new_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).get_new_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 206, in get_new_booking
+    self.logger.info(response_6.json())
+Message: {'bookingNumber': 'QA2BKGSAPIVX', 'reefers': [{'reeferId': 'FBWS0000002', 'cargoCare': '', 'accessCodes': {'accessCode': []}}, {'reeferId': 'FBWS0000001', 'cargoCare': '', 'accessCodes': {'accessCode': []}}], 'bookedTemperature': '-2', 'bookedTemperatureQualifier': 'C', 'commodity': 'apples', 'shipper': 'ShipperEntity', 'consignee': 'Consignee Entity', 'customer': 'Customer Entity', 'STCC': '01232', 'gensetId': 'WXYZ9876543'}
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 84, in test_unassign_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).unassign_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 223, in unassign_booking
+    self.logger.info(f"API Request: POST {url} - Status Code: {response_7.status_code}")
+Message: 'API Request: POST https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 84, in test_unassign_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).unassign_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 225, in unassign_booking
+    self.logger.info("Unassign Booking API request is Successful!")
+Message: 'Unassign Booking API request is Successful!'
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 88, in test_assign_new_bkg_put
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).assign_new_bkg_put()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 242, in assign_new_bkg_put
+    self.logger.info(f"API Request: PUT {url} - Status Code: {response_9.status_code}")
+Message: 'API Request: PUT https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVY - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 88, in test_assign_new_bkg_put
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).assign_new_bkg_put()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 244, in assign_new_bkg_put
+    self.logger.info("Assign New Booking Put API request is Successful!")
+Message: 'Assign New Booking Put API request is Successful!'
+Arguments: ()
+.--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 92, in test_delete_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).delete_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 261, in delete_booking
+    self.logger.info(f"API Request: DELETE {url} - Status Code: {response_10.status_code}")
+Message: 'API Request: DELETE https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVY - Status Code: 200'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 1160, in emit
+    msg = self.format(record)
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 999, in format
+    return fmt.format(record)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 705, in format
+    record.asctime = self.formatTime(record, self.datefmt)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\logging\__init__.py", line 642, in formatTime
+    s = time.strftime(datefmt, ct)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Invalid format string
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Scripts\pytest.exe\__main__.py", line 7, in <module>
+    sys.exit(console_main())
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 198, in console_main
+    code = main()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\config\__init__.py", line 175, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 320, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 273, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 327, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\main.py", line 352, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 115, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 134, in runtestprotocol
+    reports.append(call_and_report(item, "call", log))
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 223, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 262, in call_runtest_hook
+    return CallInfo.from_call(
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 342, in from_call
+    result: Optional[TResult] = func()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 263, in <lambda>
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\runner.py", line 170, in pytest_runtest_call
+    item.runtest()
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 1831, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_hooks.py", line 501, in __call__
+    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_manager.py", line 119, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pluggy\_callers.py", line 102, in _multicall
+    res = hook_impl.function(*args)
+  File "C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\_pytest\python.py", line 194, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\TestCases\test_V1BookingsAPI.py", line 92, in test_delete_booking
+    BookingsAPIRequestsV1(BKG_NUM, REEFER_ID, BKG_TEMP, booking_number2, booking_number3).delete_booking()
+  File "C:\Users\neteja\PycharmProjects\AITOOL\Api_Automation\API_Requests\V1BookingsAPIRequests.py", line 263, in delete_booking
+    self.logger.info("Delete Booking API request is Successful!")
+Message: 'Delete Booking API request is Successful!'
+Arguments: ()
+.
+
+============================== warnings summary ===============================
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_assign_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_get_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_update_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_get_bookingupdate
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_assign_new_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_get_new_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_unassign_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_assign_new_bkg_put
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_delete_booking
+  C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\connectionpool.py:1103: InsecureRequestWarning: Unverified HTTPS request is being made to host 'awsqa2.tms-orbcomm.com'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+    warnings.warn(
+
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_assign_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_get_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_update_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_get_bookingupdate
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_assign_new_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_get_new_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_unassign_booking
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_assign_new_bkg_put
+TestCases/test_V1BookingsAPI.py::TestBookingAPIV1::test_delete_booking
+  C:\Users\neteja\AppData\Local\Programs\Python\Python312\Lib\site-packages\pytest_html\plugin.py:133: DeprecationWarning: The 'report.extra' attribute is deprecated and will be removed in a future release, use 'report.extras' instead.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- Generated html report: file:///C:/Users/neteja/PycharmProjects/AITOOL/Api_Automation/Reports/Report.html -
+======================= 9 passed, 18 warnings in 15.02s =======================

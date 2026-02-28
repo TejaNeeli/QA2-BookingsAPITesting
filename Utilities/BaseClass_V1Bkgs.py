@@ -41,7 +41,7 @@ class BookingAPIURLV1:
         """
         booking_number = str(booking_number).strip()
 
-        base = "integ-zim1.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings"
+        base = "https://integ-zim1.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings"
         return f"{base}/{booking_number}"
 
     def ZIMINTEG2BookingAPIV1URL(self, booking_number: str):
@@ -51,7 +51,7 @@ class BookingAPIURLV1:
         """
         booking_number = str(booking_number).strip()
 
-        base = "integ-zim2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings"
+        base = "https://integ-zim2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings"
         return f"{base}/{booking_number}"
 
     def PRODBookingAPIV1URL(self, booking_number: str):

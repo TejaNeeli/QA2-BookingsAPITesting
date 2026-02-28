@@ -3,6 +3,10 @@ import os
 import re
 import time
 from datetime import datetime
+from dotenv import load_dotenv
+import openai
+
+load_dotenv()
 
 
 def log_streamer_func(logfile_path):
@@ -54,3 +58,31 @@ def stream_log(logfile_path):
                         log_file.seek(0)
                     time.sleep(0.1)  # Wait briefly before checking for new lines
     return generate
+
+
+def summarize_logs(log_content):
+    """
+    Summarize the provided log content using OpenAI GPT-3.5-turbo.
+    """
+    api_key = os.getenv('OPENAI_API_KEY')
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set OPENAI_API_KEY in your .env file.")
+
+    client = openai.OpenAI(api_key=api_key)
+
+    prompt = f"Summarize the following log entries concisely:\n\n{log_content}"
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant that summarizes log files."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=300,
+            temperature=0.5
+        )
+        summary = response.choices[0].message.content.strip()
+        return summary
+    except Exception as e:
+        return f"Error summarizing logs: {str(e)}"

@@ -45,9 +45,9 @@ class BookingsAPIRequestsV1:
         self.ZIMINTEG1Bkg2_V1URL = api.ZIMINTEG1BookingAPIV1URL(booking_number2)
         self.ZIMINTEG1Bkg3_V1URL = api.ZIMINTEG1BookingAPIV1URL(booking_number3)
 
-        self.ZIMINTEG2Bkg1_V2URL = api.ZIMINTEG2BookingAPIV1URL(booking_number1)
-        self.ZIMINTEG2Bkg2_V2URL = api.ZIMINTEG2BookingAPIV1URL(booking_number2)
-        self.ZIMINTEG2Bkg3_V2URL = api.ZIMINTEG2BookingAPIV1URL(booking_number3)
+        self.ZIMINTEG2Bkg1_V1URL = api.ZIMINTEG2BookingAPIV1URL(booking_number1)
+        self.ZIMINTEG2Bkg2_V1URL = api.ZIMINTEG2BookingAPIV1URL(booking_number2)
+        self.ZIMINTEG2Bkg3_V1URL = api.ZIMINTEG2BookingAPIV1URL(booking_number3)
 
         self.PRODBkg1_V1URL = api.PRODBookingAPIV1URL(booking_number1)
         self.PRODBkg2_V1URL = api.PRODBookingAPIV1URL(booking_number2)
@@ -91,11 +91,11 @@ class BookingsAPIRequestsV1:
         if self.environment == "INTEG":
             url = [self.INTEGBkg1_V1URL, self.INTEGBkg2_V1URL, self.INTEGBkg3_V1URL][which - 1]
             headers = self.header_cdhinternal
-        elif self.environment == "ZIMINTEG1":
+        elif self.environment == "ZIM-INTEG1":
             url = [self.ZIMINTEG1Bkg1_V1URL, self.ZIMINTEG1Bkg2_V1URL, self.ZIMINTEG1Bkg3_V1URL][which - 1]
             headers = self.header_ziminteg1fleet1
-        elif self.environment == "ZIMINTEG2":
-            url = [self.ZIMINTEG2Bkg1_V2URL, self.ZIMINTEG2Bkg2_V2URL, self.ZIMINTEG2Bkg3_V2URL][which - 1]
+        elif self.environment == "ZIM-INTEG2":
+            url = [self.ZIMINTEG2Bkg1_V1URL, self.ZIMINTEG2Bkg2_V1URL, self.ZIMINTEG2Bkg3_V1URL][which - 1]
             headers = self.header_ziminteg2fleet1
         elif self.environment == "PROD":
             url = [self.PRODBkg1_V1URL, self.PRODBkg2_V1URL, self.PRODBkg3_V1URL][which - 1]
