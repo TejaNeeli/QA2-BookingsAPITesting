@@ -1,22 +1,28 @@
-2026-02-28 22:38:12,264 INFO API Request: POST https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200
-2026-02-28 22:38:12,267 INFO Booking created API request is Successful!
-2026-02-28 22:38:13,598 INFO API Request: GET https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200
-2026-02-28 22:38:13,601 INFO Get Booking API request is Successful!
-2026-02-28 22:38:13,603 INFO {'bookingNumber': 'QA2BKGSAPIV1', 'reefers': [{'reeferId': 'FBWS0000002', 'cargoCare': '', 'accessCodes': {'accessCode': []}}, {'reeferId': 'FBWS0000001', 'cargoCare': '', 'accessCodes': {'accessCode': []}}], 'bookedTemperature': '-10', 'bookedTemperatureQualifier': 'C', 'commodity': '', 'shipper': '', 'consignee': '', 'customer': '', 'STCC': '', 'gensetId': ''}
-2026-02-28 22:38:15,030 INFO API Request: POST https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200
-2026-02-28 22:38:15,031 INFO Booking Updated API request is Successful!
-2026-02-28 22:38:16,193 INFO API Request: GET https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 200
-2026-02-28 22:38:16,195 INFO Get Booking API request after Booking update is Successful!
-2026-02-28 22:38:16,197 INFO {'bookingNumber': 'QA2BKGSAPIV1', 'reefers': [{'reeferId': 'FBWS0000002', 'cargoCare': '', 'accessCodes': {'accessCode': []}}, {'reeferId': 'FBWS0000001', 'cargoCare': '', 'accessCodes': {'accessCode': []}}], 'bookedTemperature': '-20', 'bookedTemperatureQualifier': 'C', 'commodity': '', 'shipper': '', 'consignee': '', 'customer': '', 'STCC': '', 'gensetId': ''}
-2026-02-28 22:38:17,825 INFO API Request: PUT https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 200
-2026-02-28 22:38:17,827 INFO Assign New Booking API request is Successful!
-2026-02-28 22:38:19,359 INFO API Request: GET https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 200
-2026-02-28 22:38:19,360 INFO Get New Booking API request is Successful!
-2026-02-28 22:38:19,363 INFO {'bookingNumber': 'QA2BKGSAPIVX', 'reefers': [{'reeferId': 'FBWS0000002', 'cargoCare': '', 'accessCodes': {'accessCode': []}}, {'reeferId': 'FBWS0000001', 'cargoCare': '', 'accessCodes': {'accessCode': []}}], 'bookedTemperature': '-2', 'bookedTemperatureQualifier': 'C', 'commodity': 'apples', 'shipper': 'ShipperEntity', 'consignee': 'Consignee Entity', 'customer': 'Customer Entity', 'STCC': '01232', 'gensetId': 'WXYZ9876543'}
-2026-02-28 22:38:20,697 INFO API Request: POST https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 200
-2026-02-28 22:38:20,698 INFO Unassign Booking API request is Successful!
-2026-02-28 22:38:22,698 INFO API Request: PUT https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVY - Status Code: 200
-2026-02-28 22:38:22,700 INFO Assign New Booking Put API request is Successful!
-2026-02-28 22:38:25,065 INFO API Request: DELETE https://awsqa2.tms-orbcomm.com:44344/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVY - Status Code: 200
-2026-02-28 22:38:25,066 INFO Delete Booking API request is Successful!
-2026-02-28 22:38:25 INFO TEST_RUN_COMPLETE
+2026-03-11 00:34:12,347 INFO API Request: POST http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 404
+2026-03-11 00:34:12,347 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:12,347 WARNING Booking created API request is Failed!
+2026-03-11 00:34:14,392 INFO API Request: GET http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 404
+2026-03-11 00:34:14,392 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:14,392 WARNING Booking created API request is Failed!
+2026-03-11 00:34:16,490 INFO API Request: POST http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 404
+2026-03-11 00:34:16,490 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:16,490 WARNING Booking created API request is Failed!
+2026-03-11 00:34:18,559 INFO API Request: GET http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIV1 - Status Code: 404
+2026-03-11 00:34:18,562 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:18,564 WARNING Booking created API request is Failed!
+2026-03-11 00:34:20,614 INFO API Request: PUT http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 404
+2026-03-11 00:34:20,614 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:20,614 WARNING Assign New Booking API request is Failed!
+2026-03-11 00:34:22,702 INFO API Request: GET http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 404
+2026-03-11 00:34:22,706 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:22,709 WARNING Get New Booking API request is Failed!
+2026-03-11 00:34:24,796 INFO API Request: POST http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVX - Status Code: 404
+2026-03-11 00:34:24,796 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:24,801 WARNING Unassign Booking API request is Failed!
+2026-03-11 00:34:26,877 INFO API Request: PUT http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVY - Status Code: 404
+2026-03-11 00:34:26,881 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:26,883 WARNING Assign New Booking Put API request is Failed!
+2026-03-11 00:34:28,944 INFO API Request: DELETE http://localhost:5000/rcweb/v1/BookingMgmt/Bookings/QA2BKGSAPIVY - Status Code: 404
+2026-03-11 00:34:28,947 ERROR {'Error - status_code': 404, 'Error - text': '<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'}
+2026-03-11 00:34:28,947 WARNING Delete Booking API request is Failed!
+2026-03-11 00:34:29 INFO TEST_RUN_COMPLETE

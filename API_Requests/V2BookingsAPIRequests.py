@@ -53,6 +53,11 @@ class BookingsAPIRequestsV2:
         self.PRODBkg2_V2URL = api.PRODBookingAPIV2URL(booking_number2)
         self.PRODBkg3_V2URL = api.PRODBookingAPIV2URL(booking_number3)
 
+        LOCAL_URL = os.environ.get('TEST_SERVER_URL', 'http://localhost:5000')
+        self.LOCALBkg1_V2URL = api.LOCALBookingAPIV2URL(LOCAL_URL, booking_number1)
+        self.LOCALBkg2_V2URL = api.LOCALBookingAPIV2URL(LOCAL_URL, booking_number2)
+        self.LOCALBkg3_V2URL = api.LOCALBookingAPIV2URL(LOCAL_URL, booking_number3)
+
         self.header_apple = fleetAuthorizationV2().QA2_autho_apple()
         self.header_cdhinternal = fleetAuthorizationV2().Integ_autho_cdhinterna()
         self.header_ziminteg1fleet1 = fleetAuthorizationV2().ZimInteg1_autho_integ1fleet1()
@@ -100,6 +105,9 @@ class BookingsAPIRequestsV2:
         elif self.environment == "PROD":
             url = [self.PRODBkg1_V2URL, self.PRODBkg2_V2URL, self.PRODBkg3_V2URL][which - 1]
             headers = self.header_prod
+        elif self.environment == "LOCAL":
+            url = [self.LOCALBkg1_V2URL, self.LOCALBkg2_V2URL, self.LOCALBkg3_V2URL][which - 1]
+            headers = self.header_apple
         else:  # Default to QA2
             url = [self.QA2Bkg1_V2URL, self.QA2Bkg2_V2URL, self.QA2Bkg3_V2URL][which - 1]
             headers = self.header_apple

@@ -1,5 +1,9 @@
-from flask import Flask, render_template_string, request, send_from_directory, jsonify, Response
+from flask import Flask, render_template_string, request, send_from_directory, jsonify, Response, redirect, url_for, session
+from authlib.integrations.flask_client import OAuth
 import os
+from dotenv import load_dotenv
+# Load .env early so environment variables (like GITHUB_TOKEN) are available
+load_dotenv()
 import subprocess
 import time
 import logging
@@ -7,16 +11,44 @@ import re
 import threading
 from queue import Queue
 from log_streamer import log_streamer_func, stream_log, summarize_logs
+from functools import wraps
+import requests
+import asyncio
+
+print('GITHUB_TOKEN visible:', bool(os.environ.get('GITHUB_TOKEN')))
+
+try:
+    from copilot import CopilotClient, PermissionHandler
+except ImportError:
+    CopilotClient = None
+    PermissionHandler = None
 
 app = Flask(__name__)
-
-print('app.py imported pid=', os.getpid(), 'WERKZEUG_RUN_MAIN=', os.environ.get('WERKZEUG_RUN_MAIN'))
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "change-me-in-prod")
 
 TEST_CASES_DIR = os.path.join(os.path.dirname(__file__), 'TestCases')
 REPORTS_DIR = os.path.join(os.path.dirname(__file__), 'Reports')
 LOG_FILE = os.path.join(TEST_CASES_DIR, 'logfile.log')
 HTML_REPORT = os.path.join(REPORTS_DIR, 'Report.html')
 RUN_OUTPUT_FILE = os.path.join(REPORTS_DIR, 'console_output.txt')
+
+oauth = OAuth(app)
+app.config.update({
+    "AUTH0_CLIENT_ID": "UOegEOm7UJq0w22FIqMZtYYFEbDK2nJa",
+    "AUTH0_CLIENT_SECRET": "lVtGjLMja0MNoBIecV2wYDR_1EZCVmkwBZMt4u0ydcZBpgxajWl1rf5i-K0MN2dz",
+    "AUTH0_DOMAIN": "dev-btdohqhc48kgo2oj.us.auth0.com",
+    "AUTH0_CALLBACK_URL": "http://localhost:5000/callback",
+    "AUTH0_AUDIENCE": "https://dev-btdohqhc48kgo2oj.us.auth0.com/userinfo",
+})
+
+auth0 = oauth.register(
+    "auth0",
+    client_id=app.config["AUTH0_CLIENT_ID"],
+    client_secret=app.config["AUTH0_CLIENT_SECRET"],
+    client_kwargs={"scope": "openid profile email"},
+    server_metadata_url=f"https://{app.config['AUTH0_DOMAIN']}/.well-known/openid-configuration",
+)
+
 
 # Simple in-memory pub/sub for SSE: each client gets a Queue; runner publishes lines to all queues
 SUBSCRIBERS = []
@@ -53,7 +85,7 @@ TEMPLATE = '''
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden; /* prevent vertical scroll */
+            overflow: auto; /* allow scrolling if content overflows */
             color: #333;
             animation: fadeIn 1s ease-in;
         }
@@ -160,6 +192,17 @@ TEMPLATE = '''
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        #aiLoader {
+            display: none;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #6610f2;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 8px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         #logStreamContainer {
             display: none;
@@ -268,6 +311,65 @@ TEMPLATE = '''
         #BKG_TEMP.input-field {
             width: 120px;
         }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .modal {
+            background: #ffffff;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header-left {
+            flex: 1;
+        }
+        .modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-btn {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .modal-btn:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+        .modal-body {
+            padding: 12px 16px;
+            overflow-y: auto;
+        }
+        .modal-body pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Fira Code', 'Courier New', monospace;
+        }
     </style>
     <script>
         // SSE and UI helpers
@@ -326,6 +428,18 @@ TEMPLATE = '''
             document.getElementById('runBtn').disabled = false;
         }
 
+        function startAILoader() {
+            document.getElementById('aiLoader').style.display = 'block';
+            document.getElementById('aiSendBtn').disabled = true;
+            document.getElementById('generateTestsBtn').disabled = true;
+        }
+
+        function stopAILoader() {
+            document.getElementById('aiLoader').style.display = 'none';
+            document.getElementById('aiSendBtn').disabled = false;
+            document.getElementById('generateTestsBtn').disabled = false;
+        }
+
         function connectEventSource() {
             if (es) try { es.close(); } catch (e) {}
             es = new EventSource('/stream-log');
@@ -339,9 +453,8 @@ TEMPLATE = '''
                 var line = e.data || '';
                 if (!linesSeen.has(line)) {
                     linesSeen.add(line);
-                    var colored = colorizeLogLine(line);
                     var logStream = document.getElementById('logStream');
-                    logStream.innerHTML += colored + "<br>";
+                    logStream.innerHTML += colorizeLogLine(line) + "<br>";
                     logStream.scrollTop = logStream.scrollHeight;
                 }
                 if (line.indexOf('TEST_RUN_COMPLETE') !== -1) {
@@ -405,18 +518,18 @@ TEMPLATE = '''
             var envSelect = document.getElementById('environment');
             var customToggle = document.getElementById('customToggle');
 
-            // Defensive checks: if any control is missing, do not try to operate on them
             if (!testSelect || !bkgNumInput || !reeferInput || !bkgTempInput || !envSelect || !customToggle) {
                 console.warn('Form controls not fully present; skipping default population and toggle wiring.');
                 return;
             }
 
             // Ensure custom toggle starts unchecked so defaults are applied initially
-            try { customToggle.checked = false; } catch(e){/* ignore */}
 
-            function determineDefaults() {
-                var selectedTest = (testSelect.options[testSelect.selectedIndex] && testSelect.options[testSelect.selectedIndex].text) ? testSelect.options[testSelect.selectedIndex].text.trim() : '';
-                var env = (envSelect && envSelect.value) ? envSelect.value.toUpperCase() : 'QA2';
+             try { customToggle.checked = false; } catch(e){/* ignore */}
+              function determineDefaults() {
+               var selectedTest = (testSelect.options[testSelect.selectedIndex] && testSelect.options[testSelect.selectedIndex].text) ? testSelect.options[testSelect.selectedIndex].text.trim() : '';
+               var env = (envSelect && envSelect.value) ? envSelect.value.toUpperCase() : 'QA2';
+
                 if (selectedTest.indexOf('BookingsAPI-V1') !== -1) {
                     if (env === 'INTEG') {
                         return { reefer: 'CCHD0000001,CCHD0000002', bkgNum: 'INTEGBKGSAPIV1', bkgTemp: '-10' };
@@ -459,12 +572,12 @@ TEMPLATE = '''
             function applyDefaults() {
                 var vals = determineDefaults();
                 setFieldDefaults(vals);
+
                 // Toggle readOnly based on custom mode
                 var readonly = !customToggle.checked;
-                [reeferInput, bkgNumInput, bkgTempInput].forEach(function(el){ try { if (el) el.readOnly = readonly; } catch(e){} });
+                [reeferInput, bkgNumInput, bkgTempInput].forEach(function(el){ try{ if (el) el.readOnly = readonly; } catch(e){} });
             }
-
-            // Toggle behavior: enable editing when checked; restore defaults when unchecked
+             // Toggle behavior: enable editing when checked; restore defaults when unchecked
             customToggle.addEventListener('change', function() {
                 if (!customToggle.checked) {
                     setFieldDefaults(determineDefaults());
@@ -484,8 +597,20 @@ TEMPLATE = '''
                 applyDefaults();
             });
             // Initial
-            applyDefaults();
+           applyDefaults();
+
+            // Show/hide local URL input based on environment selection
+            document.getElementById('environment').addEventListener('change', function() {
+                var localUrlGroup = document.getElementById('localUrlGroup');
+                if (this.value === 'LOCAL') {
+                    localUrlGroup.style.display = 'flex';
+                } else {
+                    localUrlGroup.style.display = 'none';
+                }
+            });
         });
+            
+            
         function summarizeLogs() {
             // Use async IIFE to allow async/await inside an inline function
             (async function() {
@@ -511,13 +636,110 @@ TEMPLATE = '''
                 }
             })();
         }
+
+        function openModal(title, content) {
+            var overlay = document.getElementById('aiModalOverlay');
+            var titleEl = document.getElementById('aiModalTitle');
+            var bodyEl = document.getElementById('aiModalBody');
+            if (!overlay || !titleEl || !bodyEl) return;
+            titleEl.textContent = title;
+            bodyEl.textContent = content;
+            overlay.style.display = 'flex';
+        }
+
+        function closeModal() {
+            var overlay = document.getElementById('aiModalOverlay');
+            if (overlay) overlay.style.display = 'none';
+        }
+
+        async function generateHumanReadableTestCases() {
+             try {
+                startAILoader();
+                // collect user prompt from textarea and send as JSON
+                var userPrompt = '';
+                try { userPrompt = document.getElementById('ai_prompt') && document.getElementById('ai_prompt').value ? document.getElementById('ai_prompt').value.trim() : ''; } catch(e) { userPrompt = ''; }
+
+                var resp = await fetch('/ai/generate-test-cases', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: userPrompt })
+                });
+                 if (!resp.ok) {
+                     var text = await resp.text();
+                     alert('Error generating test cases: HTTP ' + resp.status + '\\n' + text);
+                     stopAILoader();
+                     return;
+                 }
+                 var data;
+                 try {
+                     data = await resp.json();
+                 } catch (e) {
+                     var raw = await resp.text();
+                     alert('Error parsing AI response: ' + (e && e.message ? e.message : e) + '\\n' + raw);
+                     stopAILoader();
+                     return;
+                 }
+                 var content = '';
+                 if (data && data.message && data.message.content) {
+                     content = data.message.content;
+                 } else if (data && data.result && data.result.message && data.result.message.content) {
+                     content = data.result.message.content;
+                 } else if (typeof data === 'string') {
+                     content = data;
+                 } else {
+                     content = JSON.stringify(data, null, 2);
+                 }
+                 openModal('AI-Response', content);
+                 stopAILoader();
+             } catch (err) {
+                 alert('Error calling AI to generate test cases: ' + (err && err.message ? err.message : err));
+                 stopAILoader();
+             }
+         }
+         function copyToClipboard(elementId) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                navigator.clipboard.writeText(element.textContent).then(function() {
+                    alert('Copied to clipboard!');
+                }).catch(function(err) {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy to clipboard.');
+                });
+            }
+        }
+
+        function downloadAIResponse() {
+            var element = document.getElementById('aiModalBody');
+            if (element) {
+                var content = element.textContent;
+                var blob = new Blob([content], { type: 'text/plain' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'ai_response.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // Show/hide local URL input based on environment selection
+        document.getElementById('environment').addEventListener('change', function() {
+            var localUrlGroup = document.getElementById('localUrlGroup');
+            if (this.value === 'LOCAL') {
+                localUrlGroup.style.display = 'flex';
+            } else {
+                localUrlGroup.style.display = 'none';
+            }
+        });
     </script>
 </head>
 <body>
     <div class="container">
         <div class="top-bar">
             <div class="top-bar-left">
-                <h1>API AUTOPILOT - OMP (BOOKINGS API)</h1>
+                <h1>API SENTINEL</h1>
             </div>
             <div class="top-bar-right toggle-inline">
                 <input type="checkbox" id="customToggle" />
@@ -538,17 +760,23 @@ TEMPLATE = '''
                     <label for="BKG_TEMP">BKG_TEMP:</label>
                     <input class="input-field" type="number" step="any" name="BKG_TEMP" id="BKG_TEMP" />
                 </div>
+                
             </div>
             <div class="form-row">
                 <div class="input-group">
                     <label for="environment">Environment:</label>
                     <select name="environment" id="environment">
+                        <option value="LOCAL" selected>LOCAL</option>
                         <option value="QA2" selected>QA2</option>
                         <option value="INTEG">INTEG</option>
                         <option value="ZIM-INTEG1">ZIM-INTEG1</option>
                         <option value="ZIM-INTEG2">ZIM-INTEG2</option>
                         <option value="PROD">PROD</option>
                     </select>
+                </div>
+                <div class="input-group" id="localUrlGroup" style="display:none;">
+                    <label for="local_url">Local URL:</label>
+                    <input class="input-field" type="text" name="local_url" id="local_url" placeholder="e.g., http://localhost:5000" />
                 </div>
                 <div class="input-group">
                     <label for="test_file">Select Test Case:</label>
@@ -561,16 +789,44 @@ TEMPLATE = '''
                 <button id="runBtn" type="submit">Run Test</button>
             </div>
         </form>
-        <div id="loader"></div>
-        <div id="output"></div>
-        <div id="logStreamContainer" style="display:none;">
-            <h2>Live Log Stream</h2>
-            <pre id="logStream" style="background:#222;color:#eee;padding:10px;overflow:auto;"></pre>
-            <div class="download-section">
-                <button id="downloadConsole" onclick="downloadConsole()" class="download-btn"><i class="fas fa-file-download"></i> Download Console Output</button>
-                <button id="downloadLog" onclick="downloadLog()" class="download-btn"><i class="fas fa-file-alt"></i> Download Log File</button>
-                <button id="downloadReport" onclick="downloadReport()" class="download-btn"><i class="fas fa-file-html"></i> Download HTML Report</button>
-                <button id="summarizeBtn" onclick="summarizeLogs()" class="download-btn"><i class="fas fa-brain"></i> Summarize Logs</button>
+         <div id="loader"></div>
+         <div id="aiLoader"></div>
+         <div id="output"></div>
+         <div id="logStreamContainer" style="display:none;">
+             <h2>Live Log Stream</h2>
+             <pre id="logStream" style="background:#222;color:#eee;padding:10px;overflow:auto;"></pre>
+             <div class="download-section">
+                 <button id="downloadConsole" onclick="downloadConsole()" class="download-btn"><i class="fas fa-file-download"></i> Download Console Output</button>
+                 <button id="downloadLog" onclick="downloadLog()" class="download-btn"><i class="fas fa-file-alt"></i> Download Log File</button>
+                 <button id="downloadReport" onclick="downloadReport()" class="download-btn"><i class="fas fa-file-html"></i> Download Report</button>
+                 <!-- <button id="summarizeBtn" onclick="summarizeLogs()" class="download-btn"><i class="fas fa-brain"></i> Summarize Logs</button> -->
+                 <button id="generateTestsBtn" onclick="generateHumanReadableTestCases()" class="download-btn"><i class="fas fa-list"></i> Generate AI Test Cases</button>
+             </div>
+         </div>
+         <!-- AI prompt always-visible section: appears even before a run starts -->
+        <div id="aiPromptContainer" style="margin-top:12px; text-align:left;">
+            <label for="ai_prompt" style="font-weight:600; display:block; margin-bottom:6px;">AI Prompt (optional):</label>
+            <textarea id="ai_prompt" placeholder="Enter Your Prompt ..." style="width:100%; min-height:60px; padding:8px; border-radius:6px; border:1px solid #ccc; resize:vertical;"></textarea>
+            <div style="margin-top:8px; text-align:right;">
+                <button id="aiSendBtn" class="download-btn" onclick="generateHumanReadableTestCases()"><i class="fas fa-paper-plane"></i> Send to AI</button>
+            </div>
+        </div>
+     </div>
+
+     <div id="aiModalOverlay" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <h3 id="aiModalTitle">AI Output</h3>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn" onclick="copyToClipboard('aiModalBody')">Copy to Clipboard</button>
+                    <button class="modal-btn" onclick="downloadAIResponse()">Download</button>
+                </div>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <pre id="aiModalBody"></pre>
             </div>
         </div>
     </div>
@@ -578,7 +834,55 @@ TEMPLATE = '''
 </html>
 '''
 
+# USERNAME = 'admin'  # Change as needed
+# PASSWORD = 'password'  # Change as needed
+
+# def check_auth(username, password):
+#     return username == USERNAME and password == PASSWORD
+
+# def authenticate():
+#     return Response(
+#         'Authentication required', 401,
+#         {'WWW-Authenticate': 'Basic realm="Login Required"'}
+#     )
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if "user" not in session:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return decorated
+
+
+@app.route("/login")
+def login():
+    return auth0.authorize_redirect(redirect_uri=app.config["AUTH0_CALLBACK_URL"])
+
+
+@app.route("/callback")
+def callback_handling():
+    token = auth0.authorize_access_token()
+    userinfo = token.get("userinfo") or {}
+    session["user"] = {
+        "sub": userinfo.get("sub"),
+        "name": userinfo.get("name"),
+        "email": userinfo.get("email"),
+    }
+    return redirect(url_for("index"))
+
+
+@app.route("/logout")
+@requires_auth
+def logout():
+    session.clear()
+    return redirect(
+        f"https://{app.config['AUTH0_DOMAIN']}/v2/logout?returnTo="
+        f"{request.host_url.rstrip('/')}&client_id={app.config['AUTH0_CLIENT_ID']}"
+    )
+
 @app.route('/', methods=['GET'])
+@requires_auth
 def index():
     test_files_raw = [f for f in os.listdir(TEST_CASES_DIR) if f.startswith('test_') and f.endswith('.py')]
     test_files = []
@@ -592,6 +896,7 @@ def index():
         test_files.append((f, display))
     return render_template_string(TEMPLATE, test_files=test_files)
 
+@requires_auth
 @app.route('/run', methods=['POST'])
 def run_test():
     test_file = request.form['test_file']
@@ -608,13 +913,17 @@ def run_test():
         '--self-contained-html'
     ]
     # Prepare environment variables for subprocess, including user-specified values
-    env = os.environ.copy()
+    env = os.environ.copy();
     if request.form.get('REEFER_ID'):
         env['REEFER_ID'] = request.form.get('REEFER_ID')
     if request.form.get('BKG_NUM'):
         env['BKG_NUM'] = request.form.get('BKG_NUM')
     if request.form.get('BKG_TEMP'):
         env['BKG_TEMP'] = request.form.get('BKG_TEMP')
+    # Add local URL if specified
+    local_url = request.form.get('local_url')
+    if environment == 'LOCAL' and local_url:
+        env['TEST_SERVER_URL'] = local_url
     # Ensure Python subprocesses are unbuffered for real-time streaming
     env['PYTHONUNBUFFERED'] = '1'
     # Run pytest in background thread so the Flask worker doesn't block and SSE connections stay alive
@@ -676,8 +985,9 @@ def run_test():
 
     thread = threading.Thread(target=runner, args=(cmd, env), daemon=True)
     thread.start()
-    return jsonify({'status': 'started'}), 202
+    return jsonify({"status": "started"})
 
+@requires_auth
 @app.route('/run-result')
 def run_result():
     # Return the saved console output (stdout+stderr) as JSON
@@ -690,19 +1000,23 @@ def run_result():
         return jsonify({'output': data})
     except Exception as e:
         return jsonify({'output': str(e)}), 500
+@requires_auth
 @app.route('/download/log')
 def download_log():
     # Use absolute path for directory and filename to avoid issues
     return send_from_directory(os.path.abspath(os.path.join(os.path.dirname(__file__), 'TestCases')), 'logfile.log', as_attachment=True)
 
+@requires_auth
 @app.route('/download/report')
 def download_report():
     return send_from_directory(os.path.abspath(os.path.join(os.path.dirname(__file__), 'Reports')),'Report.html', as_attachment=True)
 
+@requires_auth
 @app.route('/download/console')
 def download_console():
     return send_from_directory(os.path.abspath(REPORTS_DIR), 'console_output.txt', as_attachment=True)
 
+@requires_auth
 @app.route('/stream-log')
 def stream_log_route():
     logfile_path = os.path.join(os.path.dirname(__file__), 'TestCases', 'logfile.log')
@@ -727,6 +1041,7 @@ def stream_log_route():
             time.sleep(0.1)
     return Response(generate(), mimetype='text/event-stream')
 
+@requires_auth
 @app.route('/summarize-logs', methods=['GET'])
 def summarize_logs_route():
     try:
@@ -767,6 +1082,110 @@ def version_info():
         'WERKZEUG_RUN_MAIN': os.environ.get('WERKZEUG_RUN_MAIN')
     })
 
+
+async def _copilot_ask(prompt: str) -> str:
+    """Send a prompt to Copilot and return the assistant content as string."""
+    if CopilotClient is None:
+        return "Copilot SDK (Python) is not installed. Please install the 'copilot' package."
+    github_token = os.environ.get("GITHUB_TOKEN")
+    if not github_token:
+        return "GITHUB_TOKEN environment variable is not set."
+
+    client = CopilotClient({
+        "github_token": github_token,
+        "use_logged_in_user": False,
+    })
+
+    await client.start()
+    try:
+        # Use PermissionHandler.approve_all only if available
+        on_permission = getattr(PermissionHandler, 'approve_all', None) if PermissionHandler is not None else None
+        session = await client.create_session({"model": "claude opus 4.6", "on_permission_request": on_permission})
+        # Increase timeout to 120 seconds
+        response = await asyncio.wait_for(session.send_and_wait({"prompt": prompt}), timeout=120.0)
+        # Try to extract content safely
+        try:
+            content = getattr(getattr(response, 'data', None), 'content', None)
+        except Exception:
+            content = None
+        return content if content is not None else str(response)
+    finally:
+        await client.stop()
+
+@app.route('/ai/ping', methods=['GET'])
+def ai_ping():
+    """Health check endpoint for Copilot Python SDK."""
+    try:
+        result = asyncio.run(_copilot_ask("Reply with the single word: pong"))
+        return jsonify({"ok": True, "copilot_reply": result}), 200
+    except Exception as e:
+        return jsonify({"ok": False, "error": str(e)}), 500
+
+
+@app.route('/ai/ask', methods=['POST'])
+def ai_ask():
+    data = request.get_json(silent=True) or {};
+    user_input = data.get('input');
+    if not user_input:
+        return jsonify({'error': 'Missing input'}), 400
+    try:
+        result = asyncio.run(_copilot_ask(user_input))
+        return jsonify({'message': {'content': result}}), 200
+    except Exception as e:
+        return jsonify({'error': 'Copilot call failed', 'detail': str(e)}), 500
+
+@app.route('/ai/generate-test-cases', methods=['POST'])
+@requires_auth
+def ai_generate_test_cases():
+    """Generate human-readable test cases from the execution log.
+
+    Accepts optional JSON body {"prompt": "..."} sent from the web UI.
+    Reads LOG_FILE, prepends the optional user prompt to the instruction, sends to Copilot,
+    and returns Copilot's reply under message.content.
+    """
+    data = request.get_json(silent=True) or {};
+    user_prompt = (data.get('prompt') or '').strip();
+
+    # Read the log file
+    try:
+        with open(LOG_FILE, 'r', encoding='utf-8', errors='replace') as f:
+            log_content = f.read()
+    except Exception as e:
+        return jsonify({'error': 'Failed to read log file', 'detail': str(e)}), 500
+
+    if not log_content or not log_content.strip():
+        return jsonify({'error': 'Log file is empty'}), 400;
+
+    instruction = (
+        "You are an expert API test engineer.\n"
+        "You are given an execution log from automated API tests.\n\n"
+        "Your task is to read the log and generate HUMAN-READABLE test cases for each distinct API call.\n"
+        "For each test case, produce a clear Markdown section in this format:\n\n"
+        "### Test Case <number>: <short descriptive title>\n"
+        "- API Endpoint: <HTTP method and path, e.g. POST /bookings/v1>\n"
+        "- Purpose: <what this call is validating>\n"
+        "- Pre-conditions: <any setup or assumptions>\n"
+        "- Request: <high-level description of key fields, not raw JSON>\n"
+        "- Expected Result: <status code and main validations>\n"
+        "- Notes: <any risks, edge cases, or follow-ups>\n\n"
+        "Do NOT output code. Do NOT write pytest functions.\n"
+        "Focus on making the test cases easy for a human tester to understand.\n"
+        "Group together log lines logically when they belong to the same API call.\n\n"
+        "Below is the log content. Use it as the only source of truth.\n"
+        "LOG CONTENT START\n"
+    );
+
+    if user_prompt:
+        prompt = "USER PROMPT:\n" + user_prompt + "\n\n";
+    else:
+        prompt = instruction + log_content + "\nLOG CONTENT END\n";
+
+    try:
+        result = asyncio.run(_copilot_ask(prompt))
+        return jsonify({'message': {'content': result}}), 200
+    except Exception as e:
+        return jsonify({'error': 'Copilot call failed', 'detail': str(e)}), 500
+
 if __name__ == '__main__':
     # Run with threaded=True and disable the reloader to avoid connection resets during dev
-    app.run(debug=True, threaded=True, use_reloader=False)
+    app.run(debug=True, threaded=True, use_reloader=False);

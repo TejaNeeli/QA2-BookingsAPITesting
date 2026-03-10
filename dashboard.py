@@ -1,13 +1,107 @@
 import streamlit as st
+from authlib.integrations.requests_client import OAuth2Session
+import os
 import pandas as pd
 import re
-import os
 import time
 import io
 import html as html_lib
 import tempfile
 from collections import Counter
 from bs4 import BeautifulSoup
+import plotly.graph_objects as go
+from streamlit_plotly_events import plotly_events
+
+
+# Auth0 configuration
+AUTH0_DOMAIN = "dev-btdohqhc48kgo2oj.us.auth0.com"
+AUTH0_CLIENT_ID = "UOegEOm7UJq0w22FIqMZtYYFEbDK2nJa"
+AUTH0_CLIENT_SECRET = "lVtGjLMja0MNoBIecV2wYDR_1EZCVmkwBZMt4u0ydcZBpgxajWl1rf5i-K0MN2dz"
+AUTH0_CALLBACK_URL = "http://localhost:8501/callback"
+AUTH0_SCOPE = "openid profile email"
+
+# Initialize session state variables
+if "auth0_token" not in st.session_state:
+    st.session_state["auth0_token"] = None
+if "auth0_user" not in st.session_state:
+    st.session_state["auth0_user"] = None
+
+# Function to create Auth0 client
+def get_auth0_client():
+    return OAuth2Session(
+        client_id=AUTH0_CLIENT_ID,
+        client_secret=AUTH0_CLIENT_SECRET,
+        scope=AUTH0_SCOPE,
+        redirect_uri=AUTH0_CALLBACK_URL,
+    )
+
+# Generate Auth0 login URL
+def login_url():
+    client = get_auth0_client()
+    authorization_endpoint = f"https://{AUTH0_DOMAIN}/authorize"
+    uri, state = client.create_authorization_url(authorization_endpoint)
+    # Keep state in session if needed later, but we won't manually compare it
+    st.session_state["auth0_state"] = state
+    return uri
+
+# Handle Auth0 callback and fetch token/userinfo
+def handle_callback():
+    query_params = st.query_params
+    code = query_params.get("code")
+    if not code:
+        return False
+
+    client = get_auth0_client()
+    token_endpoint = f"https://{AUTH0_DOMAIN}/oauth/token"
+
+    # Let Authlib handle state/CSRF validation internally when exchanging the code
+    token = client.fetch_token(
+        token_endpoint,
+        code=code,
+        grant_type="authorization_code",
+    )
+    st.session_state["auth0_token"] = token
+
+    # Fetch userinfo
+    user_client = OAuth2Session(
+        client_id=AUTH0_CLIENT_ID,
+        token=token,
+    )
+    userinfo = user_client.get(f"https://{AUTH0_DOMAIN}/userinfo").json()
+    st.session_state["auth0_user"] = userinfo
+
+    # Clear query params so reloads don't re-run callback
+    try:
+        st.query_params.clear()
+    except Exception:
+        pass
+
+    return True
+
+# Ensure user is logged in
+def ensure_logged_in():
+    if st.session_state.get("auth0_user"):
+        return True
+
+    # If we just came back from Auth0 with a code, finish login
+    if handle_callback():
+        return True
+
+    # Not logged in yet: show a real button
+    auth_url = login_url()
+    if st.button("Login with Auth0"):
+        st.markdown(
+            f'<meta http-equiv="refresh" content="0; url={auth_url}" />',
+            unsafe_allow_html=True,
+        )
+    st.stop()
+
+# Call ensure_logged_in() to enforce login
+ensure_logged_in()
+user = st.session_state.get("auth0_user", {})
+st.sidebar.write(f"Logged in as: {user.get('name') or user.get('email')}")
+
+# --- Existing dashboard code starts here ---
 
 # Detect optional AG Grid support and import symbols for static analysis
 try:
@@ -95,20 +189,50 @@ st.markdown("""
 .stApp .main .block-container{padding-top:0.5rem;padding-bottom:0.5rem;background:var(--page-bg)}
 .card {background: linear-gradient(135deg,var(--card-bg), #f6f9ff);border-radius:12px;padding:12px;margin-bottom:12px;border:1px solid var(--card-border);color:var(--text)}
 .metrics {display:flex;gap:12px}
-.metric-box {background:linear-gradient(90deg,var(--card-bg),#f8fbff);padding:12px;border-radius:10px;flex:1;text-align:center;color:var(--text)}
+.metric-box {background:linear-gradient(90deg,var(--card-bg),#f8fbff);padding:12px;border-radius:10px;border:1px solid var(--card-border);flex:1;text-align:center;color:var(--text)}
 .small {font-size:0.9rem;color:var(--muted)}
-.logo {font-weight:700;font-size:1.1rem;color:var(--text)}
+.logo {font-weight:700;font-size:2rem;color:var(--text);margin-top:-10px;}
 .badge {padding:4px 8px;border-radius:8px;color:#fff;font-weight:600}
 .grid-theme-light .ag-header { background: transparent; }
 .grid-theme-dark .ag-root { background: #0b1220; color: #e6eef8 }
+.plotly-graph-div:hover { cursor: pointer !important; }
+.plotly-graph-div svg:hover { cursor: pointer !important; }
 </style>
 """, unsafe_allow_html=True)
-st.markdown('<div class="logo">📊 Booking Analytics Dashboard</div>', unsafe_allow_html=True)
-col_title, col_spacer = st.columns([6,1])
-with col_title:
-    st.markdown('<div class="logo">📊 Booking Analytics Dashboard</div>', unsafe_allow_html=True)
-with col_spacer:
-    st.empty()
+st.markdown('<div style="text-align: center; margin-bottom: 10px; background: var(--page-bg);"><div class="logo">📊 Booking Analytics Dashboard</div></div>', unsafe_allow_html=True)
+
+# Initialize selected view
+if "selected_view" not in st.session_state:
+    st.session_state.selected_view = "Log File"
+
+# Initialize metric filter
+if "metric_filter" not in st.session_state:
+    st.session_state.metric_filter = None
+
+# Reset logic: clear filters and selections if reset flag is set
+if 'reset_all' in st.session_state:
+    st.session_state.metric_filter = None
+    st.session_state.selected_levels = ['ERROR', 'WARNING', 'INFO']
+    st.session_state.search_text = ''
+    st.session_state['last_pie_click'] = None
+    st.session_state['last_bar_click'] = None
+    st.session_state['chart_version'] = st.session_state.get('chart_version', 0) + 1
+    del st.session_state['reset_all']
+    st.rerun()
+
+# Buttons for navigation
+# col1, col2, col3 = st.columns([1,1,1])
+# with col1:
+#     if st.button("Log File", key="log_file_btn"):
+#         st.session_state.selected_view = "Log File"
+# with col2:
+#     if st.button("Console Output", key="console_output_btn"):
+#         st.session_state.selected_view = "Console Output"
+# with col3:
+#     if st.button("Report.html", key="report_html_btn"):
+#         st.session_state.selected_view = "Report.html"
+
+selected_view = st.session_state.selected_view
 
 # Controls
 with st.sidebar:
@@ -116,8 +240,8 @@ with st.sidebar:
     # Theme selector and palette choices
     theme_choice = st.radio('Theme', ['Auto', 'Light', 'Dark'], index=0)
     palette_choice = st.selectbox('Color palette', ['Tight Blue', 'Muted Slate', 'Warm'], index=0)
-    selected_levels = st.multiselect('Log levels', ['ERROR', 'WARNING', 'INFO'], default=['ERROR', 'WARNING', 'INFO'])
-    search_text = st.text_input('Search message (substring, case-insensitive)')
+    selected_levels = st.multiselect('Log levels', ['ERROR', 'WARNING', 'INFO'], default=['ERROR', 'WARNING', 'INFO'], key='selected_levels')
+    search_text = st.text_input('Search message (substring, case-insensitive)', key='search_text')
     max_rows = st.number_input('Max rows to show', min_value=10, max_value=2000, value=500, step=10)
     refresh = st.button('Refresh')
     auto_refresh = st.checkbox('Auto-refresh', value=False)
@@ -191,207 +315,242 @@ def _inject_theme_css(theme_choice, palette_choice):
 # apply theme immediately
 _inject_theme_css(theme_choice, palette_choice)
 
-# Read and display logs
-try:
-    df = parse_log()
-except Exception as e:
-    st.error(f'Failed to read log file: {e}')
-    st.stop()
+# Refresh behavior (manual + best-effort auto)
+def _attempt_rerun():
+    st.rerun()
 
-if not os.path.exists(LOG_FILE):
-    st.warning('Log file not found: ' + LOG_FILE)
-    st.stop()
+if refresh:
+    st.session_state['reset_all'] = True
+    _attempt_rerun()
 
-# Show last modified timestamp
-try:
-    mtime = os.path.getmtime(LOG_FILE)
-    st.sidebar.write('Last updated:', pd.to_datetime(mtime, unit='s'))
-except Exception:
-    pass
+if auto_refresh:
+    time.sleep(refresh_interval)
+    _attempt_rerun()
 
-if df.empty:
-    st.info('No log data found.')
-else:
-    # Filtering
-    if selected_levels:
-        df = df[df['level'].isin(selected_levels)]
-    if search_text:
-        df = df[df['message'].str.contains(re.escape(search_text), case=False, na=False)]
-
-    # Summary metrics with compact cards
-    total = int(df.shape[0])
-    errs = int(df['level'].eq('ERROR').sum()) if 'level' in df.columns else 0
-    warns = int(df['level'].eq('WARNING').sum()) if 'level' in df.columns else 0
-    infos = int(df['level'].eq('INFO').sum()) if 'level' in df.columns else 0
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    mcol1, mcol2, mcol3, mcol4 = st.columns([1,1,1,2])
-    with mcol1:
-        st.metric('Total lines', total)
-    with mcol2:
-        st.metric('Errors', errs)
-    with mcol3:
-        st.metric('Warnings', warns)
-    with mcol4:
-        st.markdown('<div class="small">Log level distribution</div>', unsafe_allow_html=True)
-        st.bar_chart(df['level'].value_counts())
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # Timestamps are parsed in parse_log; ensure we have a datetime index for time charts
-    if 'timestamp' in df.columns and pd.api.types.is_datetime64_any_dtype(df['timestamp']):
-        df_time = df.set_index('timestamp')
-    else:
-        df_time = df.copy()
-
-    # Display a pageable subset to avoid huge render times
-    st.write('### Log entries')
-    # Add a severity badge column for non-AG Grid fallback too
-    def make_badge(level):
-        if level == 'ERROR':
-            return 'ERROR'
-        if level == 'WARNING':
-            return 'WARNING'
-        return 'INFO'
-
-    df_display = df.sort_values(by='timestamp', ascending=False).head(int(max_rows)).copy()
-
-    # Read full logfile contents for the "Download full logfile" button (safe fallback)
+if selected_view == "Log File":
+    # Read and display logs
     try:
-        with open(LOG_FILE, 'r', encoding='utf-8', errors='replace') as f:
-            log_contents = f.read()
-    except Exception:
-        log_contents = ''
+        df = parse_log()
+    except Exception as e:
+        st.error(f'Failed to read log file: {e}')
+        st.stop()
 
-    # Prepare download bytes (CSV + Excel if possible)
-    csv_bytes = df_display.to_csv(index=False).encode('utf-8')
-    excel_bytes = None
+    if not os.path.exists(LOG_FILE):
+        st.warning('Log file not found: ' + LOG_FILE)
+        st.stop()
+
+    # Show last modified timestamp
     try:
-        # Write Excel to a temporary file to avoid BytesIO type warnings and
-        # to make large exports safer on memory-constrained environments.
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as tmp:
-            tmp_name = tmp.name
-        with pd.ExcelWriter(tmp_name, engine='openpyxl') as writer:
-            df_display.to_excel(writer, index=False, sheet_name='logs')
-        with open(tmp_name, 'rb') as f:
-            excel_bytes = f.read()
-        try:
-            os.remove(tmp_name)
-        except Exception:
-            pass
+        mtime = os.path.getmtime(LOG_FILE)
+        st.sidebar.write('Last updated:', pd.to_datetime(mtime, unit='s'))
     except Exception:
-        excel_bytes = None
+        pass
 
-    # Render with AG Grid if available, otherwise fallback to an HTML-colored table
-    if AGGRID_AVAILABLE:
-        gb = GridOptionsBuilder.from_dataframe(df_display)
-        # JS renderer for severity badges
-        badge_renderer = JsCode("""
-        function(params) {
-            var level = params.value || '';
-            var color = '#6c757d';
-            if (level === 'ERROR') color = '#dc3545';
-            else if (level === 'WARNING') color = '#fd7e14';
-            else if (level === 'INFO') color = '#20c997';
-            var span = document.createElement('span');
-            span.textContent = level;
-            span.style.padding = '4px 8px';
-            span.style.borderRadius = '8px';
-            span.style.color = '#fff';
-            span.style.background = color;
-            span.style.fontWeight = '600';
-            return span.outerHTML;
-        }
-        """)
-
-        # Configure severity/level column to show badge and make timestamp sortable
-        if 'level' in df_display.columns:
-            gb.configure_column('level', header_name='Severity', cellRenderer=badge_renderer, filter='agSetColumnFilter')
-        if 'timestamp' in df_display.columns:
-            gb.configure_column('timestamp', header_name='Timestamp', type=['dateColumnFilter','customDateTimeFormat'], custom_format_string='yyyy-MM-dd HH:mm:ss')
-
-        gb.configure_pagination(paginationAutoPageSize=False, paginationPageSize=50)
-        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc='sum')
-        grid_options = gb.build()
-
-        AgGrid(
-            df_display,
-            gridOptions=grid_options,
-            enable_enterprise_modules=False,
-            fit_columns_on_grid_load=True,
-            allow_unsafe_jscode=True,
-            theme='light'
-        )
+    if df.empty:
+        st.info('No log data found.')
     else:
-        # Build an HTML table with colored rows by severity for better readability
-        colors = {'ERROR': '#fdecea', 'WARNING': '#fff4e5', 'INFO': '#e9f7ef', 'OTHER': '#f0f0f0'}
-        table_html = ['<div style="overflow:auto;max-height:600px;"><table style="width:100%;border-collapse:collapse;font-family:monospace;">']
-        # header
-        table_html.append('<thead><tr>')
-        for col in df_display.columns:
-            table_html.append(f'<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">{html_lib.escape(str(col))}</th>')
-        table_html.append('</tr></thead>')
-        # body
-        table_html.append('<tbody>')
-        for _, row in df_display.iterrows():
-            level = str(row.get('level', ''))
-            bg = colors.get(level, 'transparent')
-            table_html.append(f'<tr style="background:{bg};">')
-            for col in df_display.columns:
-                cell = row[col]
-                cell_text = html_lib.escape(str(cell))
-                table_html.append(f'<td style="padding:6px;border-bottom:1px solid #f0f0f0;vertical-align:top;">{cell_text}</td>')
-            table_html.append('</tr>')
-        table_html.append('</tbody></table></div>')
-        st.markdown(''.join(table_html), unsafe_allow_html=True)
+        # Compute full level counts for charts (before filtering)
+        full_level_counts = df['level'].value_counts() if 'level' in df.columns else pd.Series()
+        # Ensure INFO, ERROR, WARNING are always displayed
+        for level in ['INFO', 'ERROR', 'WARNING']:
+            if level not in full_level_counts:
+                full_level_counts[level] = 0
 
-    # Provide download buttons (CSV always; Excel if available) and small time-series charts
-    c1, c2 = st.columns([3,2])
-    with c1:
-        st.download_button('Download CSV', data=csv_bytes, file_name='log_export.csv', mime='text/csv')
-        if excel_bytes is not None:
-            st.download_button('Download Excel', data=excel_bytes, file_name='log_export.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        else:
-            st.markdown('<div class="small">Excel export available if <code>openpyxl</code> is installed.</div>', unsafe_allow_html=True)
-        st.download_button('Download full logfile', data=log_contents, file_name='logfile.log', mime='text/plain')
-    with c2:
-        # Plot errors over time if timestamps available
-        try:
+        # Filtering
+        if selected_levels:
+            df = df[df['level'].isin(selected_levels)]
+        if search_text:
+            df = df[df['message'].str.contains(re.escape(search_text), case=False, na=False)]
+
+        # Summary metrics with compact cards
+        total = int(df.shape[0])
+        errs = int(df['level'].eq('ERROR').sum()) if 'level' in df.columns else 0
+        warns = int(df['level'].eq('WARNING').sum()) if 'level' in df.columns else 0
+        infos = int(df['level'].eq('INFO').sum()) if 'level' in df.columns else 0
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        mcol1, mcol2, mcol3, mcol4 = st.columns([1,1,1,1])
+        with mcol1:
+            st.markdown('<div class="metric-box">', unsafe_allow_html=True)
+            st.metric('Total Lines', total)
+            st.markdown('</div>', unsafe_allow_html=True)
+        with mcol2:
+            st.markdown('<div class="metric-box">', unsafe_allow_html=True)
+            st.metric('Info', infos)
+            st.markdown('</div>', unsafe_allow_html=True)
+        with mcol3:
+            st.markdown('<div class="metric-box">', unsafe_allow_html=True)
+            st.metric('Errors', errs)
+            st.markdown('</div>', unsafe_allow_html=True)
+        with mcol4:
+            st.markdown('<div class="metric-box">', unsafe_allow_html=True)
+            st.metric('Warnings', warns)
+            st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Use metrics values for charts to match
+        level_counts = pd.Series({'INFO': infos, 'ERROR': errs, 'WARNING': warns})
+        # Define colors for each level
+        level_colors = {'ERROR': 'red', 'WARNING': 'orange', 'INFO': 'green'}
+
+        # Layout: Left column for charts, right for table and downloads
+        col_left, col_right = st.columns([1, 2])
+
+        with col_left:
+            st.write('#### Log Level Distribution (Pie Chart)')
+            # Pie chart and bar chart for log levels (using metrics values)
+            # Filter level_counts for pie chart to only include levels with counts > 0
+            filtered_level_counts = level_counts[level_counts > 0]
+            pie_labels = list(filtered_level_counts.index)
+            pie_values = list(filtered_level_counts.values)
+            marker_colors = [level_colors.get(label, 'gray') for label in pie_labels]
+            fig_pie = go.Figure(data=[go.Pie(labels=pie_labels, values=pie_values, hole=0.3)])
+            fig_pie.update_traces(marker=dict(colors=marker_colors))
+            fig_pie.update_layout(hovermode='closest', clickmode='event+select', width=400)
+            pie_selected = plotly_events(fig_pie, click_event=True, select_event=False, key=f'pie_chart_{st.session_state.get("chart_version", 0)}')
+            if pie_selected and pie_selected != st.session_state.get('last_pie_click'):
+                point_number = pie_selected[0].get('pointNumber')
+                if point_number is not None and point_number < len(pie_labels):
+                    label = pie_labels[point_number]
+                    st.session_state.metric_filter = label
+                    st.session_state['last_pie_click'] = pie_selected
+                    st.rerun()
+
+            st.write('#### Log Level Distribution (Bar Chart)')
+            filtered_level_counts_bar = level_counts[level_counts > 0]
+            marker_colors_bar = [level_colors.get(x, 'gray') for x in filtered_level_counts_bar.index]
+            fig_bar = go.Figure(data=[go.Bar(x=list(filtered_level_counts_bar.index), y=list(filtered_level_counts_bar.values))])
+            fig_bar.update_traces(marker_color=marker_colors_bar)
+            fig_bar.update_layout(hovermode='closest', clickmode='event+select', width=400)
+            bar_selected = plotly_events(fig_bar, click_event=True, select_event=False, key=f'bar_chart_{st.session_state.get("chart_version", 0)}')
+            if bar_selected and bar_selected != st.session_state.get('last_bar_click'):
+                label = bar_selected[0].get('x')
+                if label:
+                    st.session_state.metric_filter = label
+                    st.session_state['last_bar_click'] = bar_selected
+                    st.rerun()
+
+
+
+        with col_right:
+            # Apply metric filter
+            if st.session_state.metric_filter:
+                df = df[df['level'] == st.session_state.metric_filter]
+
+            # Timestamps are parsed in parse_log; ensure we have a datetime index for time charts
             if 'timestamp' in df.columns and pd.api.types.is_datetime64_any_dtype(df['timestamp']):
-                errs_ts = df[df['level'] == 'ERROR'].set_index('timestamp').resample('1h').size()
-                warns_ts = df[df['level'] == 'WARNING'].set_index('timestamp').resample('1h').size()
-                combined = pd.DataFrame({'Errors': errs_ts, 'Warnings': warns_ts}).fillna(0)
-                if not combined.empty:
-                    st.area_chart(combined)
-        except Exception:
-            pass
+                df_time = df.set_index('timestamp')
+            else:
+                df_time = df.copy()
 
-    # Pie chart and bar chart for log levels
-    if not df.empty and 'level' in df.columns:
-        level_counts = df['level'].value_counts()
-        st.write('#### Log Level Distribution (Pie Chart)')
-        st.plotly_chart({
-            'data': [{
-                'labels': level_counts.index.tolist(),
-                'values': level_counts.values.tolist(),
-                'type': 'pie',
-                'hole': .3
-            }],
-            'layout': {'title': 'Log Level Pie Chart'}
-        })
-        st.write('#### Log Level Distribution (Bar Chart)')
-        st.bar_chart(level_counts)
+            # Display a pageable subset to avoid huge render times
+            st.write('### Log entries')
+            if st.button("Refresh", key="grid_refresh"):
+                st.session_state['reset_all'] = True
+                st.rerun()
+            # Add a severity badge column for non-AG Grid fallback too
+            def make_badge(level):
+                if level == 'ERROR':
+                    return 'ERROR'
+                if level == 'WARNING':
+                    return 'WARNING'
+                return 'INFO'
 
-# Read Console Output and Report HTML
-console_output = ''
-if os.path.exists(CONSOLE_OUTPUT_FILE):
-    with open(CONSOLE_OUTPUT_FILE, 'r', encoding='utf-8', errors='replace') as f:
-        console_output = f.read()
+            df_display = df.sort_values(by='timestamp', ascending=False).head(int(max_rows)).copy()
 
-report_html = ''
-if os.path.exists(REPORT_HTML_FILE):
-    with open(REPORT_HTML_FILE, 'r', encoding='utf-8', errors='replace') as f:
-        report_html = f.read()
+            # Read full logfile contents for the "Download full logfile" button (safe fallback)
+            try:
+                with open(LOG_FILE, 'r', encoding='utf-8', errors='replace') as f:
+                    log_contents = f.read()
+            except Exception:
+                log_contents = ''
+
+            # Prepare download bytes (CSV + Excel if possible)
+            csv_bytes = df_display.to_csv(index=False).encode('utf-8')
+            excel_bytes = None
+            try:
+                # Write Excel to a temporary file to avoid BytesIO type warnings and
+                # to make large exports safer on memory-constrained environments.
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as tmp:
+                    tmp_name = tmp.name
+                with pd.ExcelWriter(tmp_name, engine='openpyxl') as writer:
+                    df_display.to_excel(writer, index=False, sheet_name='logs')
+                with open(tmp_name, 'rb') as f:
+                    excel_bytes = f.read()
+                try:
+                    os.remove(tmp_name)
+                except Exception:
+                    pass
+            except Exception:
+                excel_bytes = None
+
+            # Render with AG Grid if available, otherwise fallback to an HTML-colored table
+            if AGGRID_AVAILABLE:
+                gb = GridOptionsBuilder.from_dataframe(df_display)
+                # Configure severity/level column as plain text so users see INFO/ERROR/WARNING
+                if 'level' in df_display.columns:
+                    gb.configure_column('level', header_name='Severity', filter='agSetColumnFilter')
+                if 'timestamp' in df_display.columns:
+                    gb.configure_column('timestamp', header_name='Timestamp', type=['dateColumnFilter','customDateTimeFormat'], custom_format_string='yyyy-MM-dd HH:mm:ss')
+
+                gb.configure_pagination(paginationAutoPageSize=False, paginationPageSize=50)
+                gb.configure_default_column(groupable=False, value=True, enableRowGroup=False, aggFunc='sum', filter=False)
+                grid_options = gb.build()
+
+                AgGrid(
+                    df_display,
+                    gridOptions=grid_options,
+                    enable_enterprise_modules=False,
+                    fit_columns_on_grid_load=True,
+                    allow_unsafe_jscode=False,
+                    theme='light'
+                )
+            else:
+                # Build an HTML table with colored rows by severity for better readability
+                colors = {'ERROR': '#fdecea', 'WARNING': '#fff4e5', 'INFO': '#e9f7ef', 'OTHER': '#f0f0f0'}
+                table_html = ['<div style="overflow:auto;max-height:600px;"><table style="width:100%;border-collapse:collapse;font-family:monospace;">']
+                # header
+                table_html.append('<thead><tr>')
+                for col in df_display.columns:
+                    table_html.append(f'<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">{html_lib.escape(str(col))}</th>')
+                table_html.append('</tr></thead>')
+                # body
+                table_html.append('<tbody>')
+                for _, row in df_display.iterrows():
+                    level = str(row.get('level', ''))
+                    bg = colors.get(level, 'transparent')
+                    table_html.append(f'<tr style="background:{bg};">')
+                    for col in df_display.columns:
+                        cell = row[col]
+                        cell_text = html_lib.escape(str(cell))
+                        table_html.append(f'<td style="padding:6px;border-bottom:1px solid #f0f0f0;vertical-align:top;">{cell_text}</td>')
+                    table_html.append('</tr>')
+                table_html.append('</tbody></table></div>')
+                st.markdown(''.join(table_html), unsafe_allow_html=True)
+
+            # Provide download buttons (CSV always; Excel if available) and small time-series charts
+            c1, c2 = st.columns([3,2])
+            with c1:
+                col_csv, col_log = st.columns(2)
+                with col_csv:
+                    st.download_button('Download CSV', data=csv_bytes, file_name='log_export.csv', mime='text/csv')
+                with col_log:
+                    st.download_button('Download full logfile', data=log_contents, file_name='logfile.log', mime='text/plain')
+                if excel_bytes is not None:
+                    st.download_button('Download Excel', data=excel_bytes, file_name='log_export.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            with c2:
+                # Plot errors over time if timestamps available
+                try:
+                    if 'timestamp' in df.columns and pd.api.types.is_datetime64_any_dtype(df['timestamp']):
+                        errs_ts = df[df['level'] == 'ERROR'].set_index('timestamp').resample('1h').size()
+                        warns_ts = df[df['level'] == 'WARNING'].set_index('timestamp').resample('1h').size()
+                        combined = pd.DataFrame({'Errors': errs_ts, 'Warnings': warns_ts}).fillna(0)
+                        if not combined.empty:
+                            st.area_chart(combined)
+                except Exception:
+                    pass
 
 # --- Helper functions for parsing key points ---
+
 def parse_console_output(text):
     # Count occurrences of ERROR, WARNING, INFO (case-insensitive)
     levels = ['ERROR', 'WARNING', 'INFO']
@@ -419,60 +578,48 @@ def parse_report_html(html_text):
             counter['WARNING'] += 1
     return counter
 
-# Add tabs for Log File, Console Output, and Report HTML
-log_tab, console_tab, report_tab = st.tabs(["Log File", "Console Output", "Report.html"])
+# Read Console Output and Report HTML
 
-with log_tab:
-    # Refresh behavior (manual + best-effort auto)
-    def _attempt_rerun():
-        # Prefer the public API
-        if hasattr(st, 'experimental_rerun'):
-            st.experimental_rerun()
-            return
-        # Try internal RerunException for older/newer Streamlit builds
-        try:
-            from streamlit.runtime.scriptrunner.script_runner import RerunException
-            raise RerunException()
-        except Exception:
-            # Clear caches where possible to allow next render to pick up changes
-            try:
-                clear_cache = getattr(st, 'cache_data', None)
-                clear_fn = getattr(clear_cache, 'clear', None)
-                if callable(clear_fn):
-                    clear_fn()
-            except Exception:
-                pass
-            try:
-                singleton_container = getattr(st, 'experimental_singleton', None)
-                if singleton_container is not None:
-                    clear_method = getattr(singleton_container, 'clear', None)
-                    if callable(clear_method):
-                        clear_method()
-                    else:
-                        # Some Streamlit builds might not expose a clear method; try alternative locations
-                        alt = getattr(st, 'experimental_memo', None)
-                        alt_clear = getattr(alt, 'clear', None) if alt is not None else None
-                        if callable(alt_clear):
-                            alt_clear()
-            except Exception:
-                pass
-            # Final fallback: ask user to reload
-            st.info('Please reload the page to refresh the dashboard.')
+console_output = ''
 
-    if refresh:
-        _attempt_rerun()
+if os.path.exists(CONSOLE_OUTPUT_FILE):
+    with open(CONSOLE_OUTPUT_FILE, 'r', encoding='utf-8', errors='replace') as f:
+        console_output = f.read()
+report_html = ''
+if os.path.exists(REPORT_HTML_FILE):
+    with open(REPORT_HTML_FILE, 'r', encoding='utf-8', errors='replace') as f:
+        report_html = f.read()
 
-    if auto_refresh:
-        time.sleep(refresh_interval)
-        _attempt_rerun()
-
-with console_tab:
+elif selected_view == "Console Output":
     st.subheader("Console Output")
     if console_output:
-        st.code(console_output, language='text')
-        # Pie and bar chart for console output levels
+        # Parse severity counts from console output
         c_counts = parse_console_output(console_output)
         if c_counts:
+            # Build a small DataFrame of console lines with inferred severity
+            console_lines = []
+            for line in console_output.splitlines():
+                level = None
+                upper = line.upper()
+                if "ERROR" in upper:
+                    level = "ERROR"
+                elif "WARNING" in upper:
+                    level = "WARNING"
+                elif "INFO" in upper:
+                    level = "INFO"
+                if level:
+                    console_lines.append({"level": level, "raw": line})
+            console_df = pd.DataFrame(console_lines) if console_lines else pd.DataFrame(columns=["level", "raw"])
+
+            # Let user choose which level to inspect (simulates clicking on chart segment)
+            levels_available = list(c_counts.keys())
+            selected_level = st.selectbox(
+                "Select a severity level to view details",
+                options=levels_available,
+                index=0 if levels_available else None,
+            ) if levels_available else None
+
+            # Show charts
             st.write('#### Console Output Level Distribution (Pie Chart)')
             st.plotly_chart({
                 'data': [{
@@ -483,14 +630,46 @@ with console_tab:
                 }],
                 'layout': {'title': 'Console Output Pie Chart'}
             })
+
             st.write('#### Console Output Level Distribution (Bar Chart)')
             st.bar_chart(pd.Series(c_counts))
+
+            # Helper to strip common logger prefixes and show only the actual message
+            def _extract_message(raw_line: str) -> str:
+                text = raw_line
+                # Drop leading "INFO - " / "ERROR - " / "WARNING - " patterns
+                text = re.sub(r"^(INFO|ERROR|WARNING)\s*-\s*", "", text, flags=re.IGNORECASE)
+                # Drop typical logger preamble like "self.logger.info("API Request: POST ...")"
+                text = re.sub(r"^self\.logger\.[a-zA-Z_]+\(f?\"", "", text)
+                text = re.sub(r"\"\)$", "", text)
+                return text.strip()
+
+            # Show filtered records for the selected level
+            if selected_level and not console_df.empty:
+                st.write(f"#### Console records for: {selected_level}")
+                filtered = console_df[console_df['level'] == selected_level]
+
+                # 1) Cleaned log text (actual log messages without logger syntax)
+                messages = [
+                    _extract_message(raw)
+                    for raw in filtered['raw'].tolist()
+                    if _extract_message(raw)
+                ]
+                if messages:
+                    st.code("\n".join(messages), language="text")
+                else:
+                    st.info("No console messages found for the selected level.")
+
+                # 2) Keep table with raw lines for reference
+                st.dataframe(filtered.rename(columns={"raw": "line"}), width='content')
+            elif console_df.empty:
+                st.info('No classified console records found.')
         else:
             st.info('No key levels found in console output.')
     else:
         st.info("No console output found.")
 
-with report_tab:
+elif selected_view == "Report.html":
     st.subheader("Report.html")
     if report_html:
         st.components.v1.html(report_html, height=600, scrolling=True)
@@ -505,8 +684,8 @@ with report_tab:
                     'type': 'pie',
                     'hole': .3
                 }],
-                'layout': {'title': 'Report Summary Pie Chart'}
-            })
+                    'layout': {'title': 'Report Summary Pie Chart'}
+                })
             st.write('#### Report Summary Distribution (Bar Chart)')
             st.bar_chart(pd.Series(r_counts))
         else:

@@ -64,6 +64,16 @@ class BookingAPIURLV1:
         base = "https://wamc.wamcentral.net:44344/rcweb/v1/BookingMgmt/Bookings"
         return f"{base}/{booking_number}"
 
+    def LOCALBookingAPIV1URL(self, LOCAL_URL, booking_number: str):
+        """
+        Build the booking API URL using a user-provided booking number.
+        Example booking_number: "BKG_V1@001"
+        """
+        booking_number = str(booking_number).strip()
+
+        base = f"{LOCAL_URL}/rcweb/v1/BookingMgmt/Bookings"
+        return f"{base}/{booking_number}"
+
     def getlogger(self):
         logger = logging.getLogger(inspect.stack()[1][3])
         if not logger.hasHandlers():
