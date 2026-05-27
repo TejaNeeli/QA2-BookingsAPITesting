@@ -5,62 +5,63 @@ import random
 import string
 import os
 
-from TestData.Booking_V2 import V2Booking
+from TestData.Booking_V3 import V3Booking
 from TestData.Fleetapidata_V2 import fleetAuthorizationV2
-from Utilities.BaseClass_V2Bkgs import BookingAPIURLV2
+from Utilities.BaseClass_V3Bkgs import BookingAPIURLV3
 
 
-class BookingsAPIRequestsV2:
+class BookingsAPIRequestsV3:
     """
     Fixed class:
     - Requires user inputs for booking numbers and XML payloads.
-    - Creates URLs using `QA2BookingAPIURLV1.QA2BookingAPIV1URL(booking_number)`.
-    - Builds XML using `QA2V1Booking.booking_v1(reefers, booked_temperature, shipper)`.
+    - Creates URLs using `QA2BookingAPIURLV3.QA2BookingAPIV3URL(booking_number)`.
+    - Builds XML using `QA2V3Booking.booking_V3(reefers, booked_temperature, shipper)`.
     """
 
     def __init__(
         self,
         booking_number1: str,
+        drys_initial: List[str],
         reefers_initial: List[str],
         booked_temperature_initial: float,
         booking_number2: str,
         booking_number3: str,
         shipper: str = "ShipperEntity",
     ):
-        api = BookingAPIURLV2()
+        api = BookingAPIURLV3()
         # Generate random alphanumeric booking numbers if not provided
         if booking_number2 is None:
             booking_number2 = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
         if booking_number3 is None:
             booking_number3 = ''.join(random.choices(string.ascii_letters + string.digits, k=7))
-        self.QA2Bkg1_V2URL = api.QA2BookingAPIV2URL(booking_number1)
-        self.QA2Bkg2_V2URL = api.QA2BookingAPIV2URL(booking_number2)
-        self.QA2Bkg3_V2URL = api.QA2BookingAPIV2URL(booking_number3)
+        self.QA2Bkg1_V3URL = api.QA2BookingAPIV3URL(booking_number1)
+        self.QA2Bkg2_V3URL = api.QA2BookingAPIV3URL(booking_number2)
+        self.QA2Bkg3_V3URL = api.QA2BookingAPIV3URL(booking_number3)
 
-        self.INTEGBkg1_V2URL = api.INTEGBookingAPIV2URL(booking_number1)
-        self.INTEGBkg2_V2URL = api.INTEGBookingAPIV2URL(booking_number2)
-        self.INTEGBkg3_V2URL = api.INTEGBookingAPIV2URL(booking_number3)
+        self.INTEGBkg1_V3URL = api.INTEGBookingAPIV3URL(booking_number1)
+        self.INTEGBkg2_V3URL = api.INTEGBookingAPIV3URL(booking_number2)
+        self.INTEGBkg3_V3URL = api.INTEGBookingAPIV3URL(booking_number3)
 
-        self.ZIMINTEG1Bkg1_V2URL = api.ZIMINTEG1BookingAPIV2URL(booking_number1)
-        self.ZIMINTEG1Bkg2_V2URL = api.ZIMINTEG1BookingAPIV2URL(booking_number2)
-        self.ZIMINTEG1Bkg3_V2URL = api.ZIMINTEG1BookingAPIV2URL(booking_number3)
+        self.ZIMINTEG1Bkg1_V3URL = api.ZIMINTEG1BookingAPIV3URL(booking_number1)
+        self.ZIMINTEG1Bkg2_V3URL = api.ZIMINTEG1BookingAPIV3URL(booking_number2)
+        self.ZIMINTEG1Bkg3_V3URL = api.ZIMINTEG1BookingAPIV3URL(booking_number3)
 
-        self.ZIMINTEG2Bkg1_V2URL = api.ZIMINTEG2BookingAPIV2URL(booking_number1)
-        self.ZIMINTEG2Bkg2_V2URL = api.ZIMINTEG2BookingAPIV2URL(booking_number2)
-        self.ZIMINTEG2Bkg3_V2URL = api.ZIMINTEG2BookingAPIV2URL(booking_number3)
+        self.ZIMINTEG2Bkg1_V3URL = api.ZIMINTEG2BookingAPIV3URL(booking_number1)
+        self.ZIMINTEG2Bkg2_V3URL = api.ZIMINTEG2BookingAPIV3URL(booking_number2)
+        self.ZIMINTEG2Bkg3_V3URL = api.ZIMINTEG2BookingAPIV3URL(booking_number3)
 
-        self.MATSONINTEGBkg1_V2URL = api.MATSONINTEGBookingAPIV2URL(booking_number1)
-        self.MATSONINTEGBkg2_V2URL = api.MATSONINTEGBookingAPIV2URL(booking_number2)
-        self.MATSONINTEGBkg3_V2URL = api.MATSONINTEGBookingAPIV2URL(booking_number3)
+        self.MATSONINTEGBkg1_V3URL = api.MATSONINTEGBookingAPIV3URL(booking_number1)
+        self.MATSONINTEGBkg2_V3URL = api.MATSONINTEGBookingAPIV3URL(booking_number2)
+        self.MATSONINTEGBkg3_V3URL = api.MATSONINTEGBookingAPIV3URL(booking_number3)
 
-        self.PRODBkg1_V2URL = api.PRODBookingAPIV2URL(booking_number1)
-        self.PRODBkg2_V2URL = api.PRODBookingAPIV2URL(booking_number2)
-        self.PRODBkg3_V2URL = api.PRODBookingAPIV2URL(booking_number3)
+        self.PRODBkg1_V3URL = api.PRODBookingAPIV3URL(booking_number1)
+        self.PRODBkg2_V3URL = api.PRODBookingAPIV3URL(booking_number2)
+        self.PRODBkg3_V3URL = api.PRODBookingAPIV3URL(booking_number3)
 
         LOCAL_URL = os.environ.get('TEST_SERVER_URL', 'http://localhost:5000')
-        self.LOCALBkg1_V2URL = api.LOCALBookingAPIV2URL(LOCAL_URL, booking_number1)
-        self.LOCALBkg2_V2URL = api.LOCALBookingAPIV2URL(LOCAL_URL, booking_number2)
-        self.LOCALBkg3_V2URL = api.LOCALBookingAPIV2URL(LOCAL_URL, booking_number3)
+        self.LOCALBkg1_V3URL = api.LOCALBookingAPIV3URL(LOCAL_URL, booking_number1)
+        self.LOCALBkg2_V3URL = api.LOCALBookingAPIV3URL(LOCAL_URL, booking_number2)
+        self.LOCALBkg3_V3URL = api.LOCALBookingAPIV3URL(LOCAL_URL, booking_number3)
 
         self.header_apple = fleetAuthorizationV2().QA2_autho_apple()
         self.header_cdhinternal = fleetAuthorizationV2().Integ_autho_cdhinterna()
@@ -72,24 +73,28 @@ class BookingsAPIRequestsV2:
         self.environment = os.environ.get('TEST_ENV', 'QA2').upper()
         self.logger = api.getlogger()
 
-        builder = V2Booking()
+        builder = V3Booking()
         random_temp = random.randint(-30, 30)
         # Extract reeferIds from reefers_initial
         reefers_ids = reefers_initial or []
+        drys_ids = drys_initial or []
         # Build request bodies from user inputs
-        self.initial_request = builder.booking_v2(
+        self.initial_request = builder.booking_v3(
+            drys=drys_ids,
             reefers=reefers_ids,
             booked_temperature=booked_temperature_initial,
             action="associate",
             shipper=shipper,
         )
-        self.update_request = builder.booking_v2(
+        self.update_request = builder.booking_v3(
+            drys=drys_ids,
             reefers=reefers_ids,
             booked_temperature=random_temp,
             action="associate",
             shipper=shipper,
         )
-        self.unassign_request = builder.booking_v2(
+        self.unassign_request = builder.booking_v3(
+            drys=drys_ids,
             reefers=reefers_ids,
             booked_temperature=random_temp,
             action="dissociate",
@@ -99,25 +104,25 @@ class BookingsAPIRequestsV2:
     def _select_target(self, which: int = 1):
         """Return (url, headers) based on selected environment and booking index (1/2/3)."""
         if self.environment == "INTEG":
-            url = [self.INTEGBkg1_V2URL, self.INTEGBkg2_V2URL, self.INTEGBkg3_V2URL][which - 1]
+            url = [self.INTEGBkg1_V3URL, self.INTEGBkg2_V3URL, self.INTEGBkg3_V3URL][which - 1]
             headers = self.header_cdhinternal
         elif self.environment == "ZIM-INTEG1":
-            url = [self.ZIMINTEG1Bkg1_V2URL, self.ZIMINTEG1Bkg2_V2URL, self.ZIMINTEG1Bkg3_V2URL][which - 1]
+            url = [self.ZIMINTEG1Bkg1_V3URL, self.ZIMINTEG1Bkg2_V3URL, self.ZIMINTEG1Bkg3_V3URL][which - 1]
             headers = self.header_ziminteg1fleet1
         elif self.environment == "ZIM-INTEG2":
-            url = [self.ZIMINTEG2Bkg1_V2URL, self.ZIMINTEG2Bkg2_V2URL, self.ZIMINTEG2Bkg3_V2URL][which - 1]
+            url = [self.ZIMINTEG2Bkg1_V3URL, self.ZIMINTEG2Bkg2_V3URL, self.ZIMINTEG2Bkg3_V3URL][which - 1]
             headers = self.header_ziminteg2fleet1
         elif self.environment == "MATSON-INTEG":
-            url = [self.MATSONINTEGBkg1_V2URL, self.MATSONINTEGBkg2_V2URL, self.MATSONINTEGBkg3_V2URL][which - 1]
+            url = [self.MATSONINTEGBkg1_V3URL, self.MATSONINTEGBkg2_V3URL, self.MATSONINTEGBkg3_V3URL][which - 1]
             headers = self.header_fomatsonfleet
         elif self.environment == "PROD":
-            url = [self.PRODBkg1_V2URL, self.PRODBkg2_V2URL, self.PRODBkg3_V2URL][which - 1]
+            url = [self.PRODBkg1_V3URL, self.PRODBkg2_V3URL, self.PRODBkg3_V3URL][which - 1]
             headers = self.header_prod
         elif self.environment == "LOCAL":
-            url = [self.LOCALBkg1_V2URL, self.LOCALBkg2_V2URL, self.LOCALBkg3_V2URL][which - 1]
-            headers = self.header_apple
+            url = [self.LOCALBkg1_V3URL, self.LOCALBkg2_V3URL, self.LOCALBkg3_V3URL][which - 1]
+            headers = self.header_apple  # Use QA2 headers for LOCAL
         else:  # Default to QA2
-            url = [self.QA2Bkg1_V2URL, self.QA2Bkg2_V2URL, self.QA2Bkg3_V2URL][which - 1]
+            url = [self.QA2Bkg1_V3URL, self.QA2Bkg2_V3URL, self.QA2Bkg3_V3URL][which - 1]
             headers = self.header_apple
         return url, headers
 

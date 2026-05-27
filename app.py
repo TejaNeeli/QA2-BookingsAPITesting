@@ -484,7 +484,16 @@ TEMPLATE = '''
             document.getElementById('logStream').innerHTML = '';
             connectEventSource();
             var form = document.getElementById('testForm');
+            
+            // Temporarily enable disabled elements to include them in FormData
+            var disabledElements = form.querySelectorAll('input:disabled, select:disabled');
+            disabledElements.forEach(function(el) { el.disabled = false; });
+            
             var formData = new FormData(form);
+            
+            // Re-disable elements
+            disabledElements.forEach(function(el) { el.disabled = true; });
+            
             fetch('/run', { method: 'POST', body: formData })
             .then(function(response) {
                 if (!response.ok) throw new Error('Server failed to start run');
@@ -514,6 +523,7 @@ TEMPLATE = '''
             var testSelect = document.getElementById('test_file');
             var bkgNumInput = document.getElementById('BKG_NUM');
             var reeferInput = document.getElementById('REEFER_ID');
+            var dryInput = document.getElementById('DRY_ID');
             var bkgTempInput = document.getElementById('BKG_TEMP');
             var envSelect = document.getElementById('environment');
             var customToggle = document.getElementById('customToggle');
@@ -532,40 +542,59 @@ TEMPLATE = '''
 
                 if (selectedTest.indexOf('BookingsAPI-V1') !== -1) {
                     if (env === 'INTEG') {
-                        return { reefer: 'CCHD0000001,CCHD0000002', bkgNum: 'INTEGBKGSAPIV1', bkgTemp: '-10' };
+                        return { reefer: 'CCHD0000001,CCHD0000002', dry: '', bkgNum: 'INTEGBKGSAPIV1', bkgTemp: '-10' };
                     } else if (env === 'ZIM-INTEG1') {
-                        return { reefer: 'ZMOU8914435', bkgNum: 'ZIMINTEG1BKGSAPIV1', bkgTemp: '-10' };
+                        return { reefer: 'ZMOU8914435', dry: '', bkgNum: 'ZIMINTEG1BKGSAPIV1', bkgTemp: '-10' };
                     } else if (env === 'ZIM-INTEG2') {
-                        return { reefer: 'ZCLU9910407', bkgNum: 'ZIMINTEG2BKGSAPIV1', bkgTemp: '-10' };
+                        return { reefer: 'ZCLU9910407', dry: '', bkgNum: 'ZIMINTEG2BKGSAPIV1', bkgTemp: '-10' };
+                    } else if (env === 'MATSON-INTEG') {
+                        return { reefer: 'MATU5137780', dry: '', bkgNum: 'MATINTBKGSAPIV1', bkgTemp: '-10' };
                     } else if (env === 'PROD') {
-                        return { reefer: 'AWSA0000002,AWSA0000003', bkgNum: 'PRODBKGSAPIV1', bkgTemp: '-10' };
+                        return { reefer: 'AWSA0000002,AWSA0000003', dry: '', bkgNum: 'PRODBKGSAPIV1', bkgTemp: '-10' };
                     }
-                    return { reefer: 'FBWS0000001,FBWS0000002', bkgNum: 'QA2BKGSAPIV1', bkgTemp: '-10' };
+                    return { reefer: 'FBWS0000001,FBWS0000002', dry: '', bkgNum: 'QA2BKGSAPIV1', bkgTemp: '-10' };
                 } else if (selectedTest.indexOf('BookingsAPI-V2') !== -1) {
                     if (env === 'INTEG') {
-                        return { reefer: 'CCHD0000003,CCHD0000004', bkgNum: 'INTEGBKGSAPIV2', bkgTemp: '-10' };
+                        return { reefer: 'CCHD0000003,CCHD0000004', dry: '', bkgNum: 'INTEGBKGSAPIV2', bkgTemp: '-10' };
                     } else if (env === 'ZIM-INTEG1') {
-                        return { reefer: 'ZMOU8914498', bkgNum: 'ZIMINTEG1BKGSAPIV2', bkgTemp: '-10' };
+                        return { reefer: 'ZMOU8914498', dry: '', bkgNum: 'ZIMINTEG1BKGSAPIV2', bkgTemp: '-10' };
                     } else if (env === 'ZIM-INTEG2') {
-                        return { reefer: 'ZCLU9910351', bkgNum: 'ZIMINTEG2BKGSAPIV2', bkgTemp: '-10' };
+                        return { reefer: 'ZCLU9910351', dry: '', bkgNum: 'ZIMINTEG2BKGSAPIV2', bkgTemp: '-10' };
+                    } else if (env === 'MATSON-INTEG') {
+                        return { reefer: 'MATU5130337', dry: '', bkgNum: 'MATINTBKGSAPIV2', bkgTemp: '-10' };
                     } else if (env === 'PROD') {
-                        return { reefer: 'VCVC2222221,AWSA0000001', bkgNum: 'PRODBKGSAPIV2', bkgTemp: '-10' };
+                        return { reefer: 'VCVC2222221,AWSA0000001', dry: '', bkgNum: 'PRODBKGSAPIV2', bkgTemp: '-10' };
                     }
-                    return { reefer: 'RPLC0000001,RPLC0000002', bkgNum: 'QA2BKGSAPIV2', bkgTemp: '-10' };
+                    return { reefer: 'RPLC0000001,RPLC0000002', dry: '', bkgNum: 'QA2BKGSAPIV2', bkgTemp: '-10' };
+                } else if (selectedTest.indexOf('BookingsAPI-V3') !== -1) {
+                    if (env === 'INTEG') {
+                        return { reefer: 'CCHD0000003,CCHD0000004', dry: 'CCHD0000003,CCHD0000004', bkgNum: 'INTEGBKGSAPIV3', bkgTemp: '-10' };
+                    } else if (env === 'ZIM-INTEG1') {
+                        return { reefer: 'ZMOU8914498', dry: 'ZMOU8914498', bkgNum: 'ZIMINTEG1BKGSAPIV3', bkgTemp: '-10' };
+                    } else if (env === 'ZIM-INTEG2') {
+                        return { reefer: 'ZCLU9910351', dry: 'ZCLU9910351', bkgNum: 'ZIMINTEG2BKGSAPIV3', bkgTemp: '-10' };
+                    } else if (env === 'MATSON-INTEG') {
+                        return { reefer: 'MATU5130337', dry: 'MATU5130337', bkgNum: 'MATINTBKGSAPIV3', bkgTemp: '-10' };
+                    } else if (env === 'PROD') {
+                        return { reefer: 'VCVC2222221,AWSA0000001', dry: 'VCVC2222221,AWSA0000001', bkgNum: 'PRODBKGSAPIV3', bkgTemp: '-10' };
+                    }
+                    return { reefer: 'RPLC0000001', dry: 'BGFA0000001', bkgNum: 'QA2BKGSAPIV3', bkgTemp: '-10' };
                 }
-                return { reefer: '', bkgNum: '', bkgTemp: '' };
+                return { reefer: '', dry: '', bkgNum: '', bkgTemp: '' };
             }
 
             function setFieldDefaults(vals) {
                 // Always set placeholders (safe checks)
-                try { if (reeferInput) reeferInput.placeholder = vals.reefer; } catch(e){}
-                try { if (bkgNumInput) bkgNumInput.placeholder = vals.bkgNum; } catch(e){}
-                try { if (bkgTempInput) bkgTempInput.placeholder = vals.bkgTemp; } catch(e){}
+                try { if (reeferInput) reeferInput.placeholder = vals.reefer || ''; } catch(e){}
+                try { if (dryInput) dryInput.placeholder = vals.dry || ''; } catch(e){}
+                try { if (bkgNumInput) bkgNumInput.placeholder = vals.bkgNum || ''; } catch(e){}
+                try { if (bkgTempInput) bkgTempInput.placeholder = vals.bkgTemp || ''; } catch(e){}
                 // Set values so they submit to backend when not custom
                 if (!customToggle.checked) {
-                    try { if (reeferInput) reeferInput.value = vals.reefer; } catch(e){}
-                    try { if (bkgNumInput) bkgNumInput.value = vals.bkgNum; } catch(e){}
-                    try { if (bkgTempInput) bkgTempInput.value = vals.bkgTemp; } catch(e){}
+                    try { if (reeferInput) reeferInput.value = vals.reefer || ''; } catch(e){}
+                    try { if (dryInput) dryInput.value = vals.dry || ''; } catch(e){}
+                    try { if (bkgNumInput) bkgNumInput.value = vals.bkgNum || ''; } catch(e){}
+                    try { if (bkgTempInput) bkgTempInput.value = vals.bkgTemp || ''; } catch(e){}
                 }
             }
 
@@ -573,9 +602,56 @@ TEMPLATE = '''
                 var vals = determineDefaults();
                 setFieldDefaults(vals);
 
-                // Toggle readOnly based on custom mode
-                var readonly = !customToggle.checked;
-                [reeferInput, bkgNumInput, bkgTempInput].forEach(function(el){ try{ if (el) el.readOnly = readonly; } catch(e){} });
+                // Always update placeholders first so user sees expected defaults
+                try { if (reeferInput) reeferInput.placeholder = vals.reefer || ''; } catch(e){}
+                try { if (dryInput) dryInput.placeholder = vals.dry || ''; } catch(e){}
+                try { if (bkgNumInput) bkgNumInput.placeholder = vals.bkgNum || ''; } catch(e){}
+                try { if (bkgTempInput) bkgTempInput.placeholder = vals.bkgTemp || ''; } catch(e){}
+
+                // Toggle disabled based on custom mode (defaults: disabled)
+                var disableMode = !customToggle.checked;
+                [reeferInput, dryInput, bkgNumInput, bkgTempInput].forEach(function(el){ try{ if(el) el.disabled = disableMode; } catch(e){} });
+                
+                var selectedTest = (testSelect.options[testSelect.selectedIndex] && testSelect.options[testSelect.selectedIndex].text) ? testSelect.options[testSelect.selectedIndex].text.trim() : '';
+                
+                // For BookingsAPI-V1 and V2: DRY_ID must be cleared and strictly disabled
+                if (selectedTest.indexOf('BookingsAPI-V1') !== -1 || selectedTest.indexOf('BookingsAPI-V2') !== -1) {
+                    if (dryInput) {
+                        try { dryInput.value = ''; } catch(e){}
+                        try { dryInput.placeholder = ''; } catch(e){}
+                        try { dryInput.disabled = true; } catch(e){}
+                    }
+                    // Ensure REEFER_ID always reflects determineDefaults() for these versions
+                    if (reeferInput) {
+                        try {
+                            if (!customToggle.checked) {
+                                reeferInput.value = vals.reefer || '';
+                            }
+                        } catch(e){}
+                        try { reeferInput.placeholder = vals.reefer || ''; } catch(e){}
+                        try { reeferInput.disabled = disableMode; } catch(e){}
+                    }
+                } else if (selectedTest.indexOf('BookingsAPI-V3') !== -1) {
+                    // For V3: set REEFER_ID and DRY_ID independently. Do not overwrite user input when custom mode is enabled.
+                    if (reeferInput) {
+                        try { if (!customToggle.checked) reeferInput.value = vals.reefer || ''; } catch(e){}
+                        try { reeferInput.placeholder = vals.reefer || ''; } catch(e){}
+                        try { reeferInput.disabled = disableMode; } catch(e){}
+                    }
+                    if (dryInput) {
+                        try { if (!customToggle.checked) dryInput.value = vals.dry || ''; } catch(e){}
+                        try { dryInput.placeholder = vals.dry || ''; } catch(e){}
+                        try { dryInput.disabled = disableMode; } catch(e){}
+                    }
+                } else {
+                    // Default behavior for other tests: apply placeholders/values but respect custom toggle
+                    try { if (!customToggle.checked && reeferInput) reeferInput.value = vals.reefer || ''; } catch(e){}
+                    try { if (!customToggle.checked && dryInput) dryInput.value = vals.dry || ''; } catch(e){}
+                    try { if (!customToggle.checked && bkgNumInput) bkgNumInput.value = vals.bkgNum || ''; } catch(e){}
+                    try { if (!customToggle.checked && bkgTempInput) bkgTempInput.value = vals.bkgTemp || ''; } catch(e){}
+                    try { if (reeferInput) reeferInput.placeholder = vals.reefer || ''; } catch(e){}
+                    try { if (dryInput) dryInput.placeholder = vals.dry || ''; } catch(e){}
+                }
             }
              // Toggle behavior: enable editing when checked; restore defaults when unchecked
             customToggle.addEventListener('change', function() {
@@ -753,14 +829,17 @@ TEMPLATE = '''
                     <input class="input-field" type="text" name="REEFER_ID" id="REEFER_ID" />
                 </div>
                 <div class="input-group">
+                    <label for="DRY_ID">DRY_ID (comma-separated):</label>
+                    <input class="input-field" type="text" name="DRY_ID" id="DRY_ID" />
+                </div>
+                <div class="input-group">
                     <label for="BKG_NUM">BKG_NUM:</label>
                     <input class="input-field" type="text" name="BKG_NUM" id="BKG_NUM" />
                 </div>
                 <div class="input-group">
                     <label for="BKG_TEMP">BKG_TEMP:</label>
                     <input class="input-field" type="number" step="any" name="BKG_TEMP" id="BKG_TEMP" />
-                </div>
-                
+                </div>    
             </div>
             <div class="form-row">
                 <div class="input-group">
@@ -771,6 +850,7 @@ TEMPLATE = '''
                         <option value="INTEG">INTEG</option>
                         <option value="ZIM-INTEG1">ZIM-INTEG1</option>
                         <option value="ZIM-INTEG2">ZIM-INTEG2</option>
+                        <option value="MATSON-INTEG">MATSON-INTEG</option>
                         <option value="PROD">PROD</option>
                     </select>
                 </div>
@@ -891,6 +971,8 @@ def index():
             display = 'BookingsAPI-V1'
         elif 'V2' in f:
             display = 'BookingsAPI-V2'
+        elif 'V3' in f:
+            display = 'BookingsAPI-V3'
         else:
             display = f
         test_files.append((f, display))
@@ -916,6 +998,8 @@ def run_test():
     env = os.environ.copy();
     if request.form.get('REEFER_ID'):
         env['REEFER_ID'] = request.form.get('REEFER_ID')
+    if request.form.get('DRY_ID'):
+        env['DRY_ID'] = request.form.get('DRY_ID')
     if request.form.get('BKG_NUM'):
         env['BKG_NUM'] = request.form.get('BKG_NUM')
     if request.form.get('BKG_TEMP'):

@@ -49,6 +49,10 @@ class BookingsAPIRequestsV1:
         self.ZIMINTEG2Bkg2_V1URL = api.ZIMINTEG2BookingAPIV1URL(booking_number2)
         self.ZIMINTEG2Bkg3_V1URL = api.ZIMINTEG2BookingAPIV1URL(booking_number3)
 
+        self.MATSONINTEGBkg1_V1URL = api.MATSONINTEGBookingAPIV1URL(booking_number1)
+        self.MATSONINTEGBkg2_V1URL = api.MATSONINTEGBookingAPIV1URL(booking_number2)
+        self.MATSONINTEGBkg3_V1URL = api.MATSONINTEGBookingAPIV1URL(booking_number3)
+
         self.PRODBkg1_V1URL = api.PRODBookingAPIV1URL(booking_number1)
         self.PRODBkg2_V1URL = api.PRODBookingAPIV1URL(booking_number2)
         self.PRODBkg3_V1URL = api.PRODBookingAPIV1URL(booking_number3)
@@ -62,6 +66,7 @@ class BookingsAPIRequestsV1:
         self.header_cdhinternal = fleetAuthorizationV1().Integ_autho_cdhinterna()
         self.header_ziminteg1fleet1 = fleetAuthorizationV1().ZimInteg1_autho_integ1fleet1()
         self.header_ziminteg2fleet1 = fleetAuthorizationV1().ZimInteg2_autho_integ2fleet1()
+        self.header_fomatsonfleet = fleetAuthorizationV1().MATSONInteg_autho_matsonfleet()
         self.header_prod = fleetAuthorizationV1().Prod_autho_vcfleet()
         # Cache selected environment (defaults to QA2)
         self.environment = os.environ.get('TEST_ENV', 'QA2').upper()
@@ -102,6 +107,9 @@ class BookingsAPIRequestsV1:
         elif self.environment == "ZIM-INTEG2":
             url = [self.ZIMINTEG2Bkg1_V1URL, self.ZIMINTEG2Bkg2_V1URL, self.ZIMINTEG2Bkg3_V1URL][which - 1]
             headers = self.header_ziminteg2fleet1
+        elif self.environment == "MATSON-INTEG":
+            url = [self.MATSONINTEGBkg1_V1URL, self.MATSONINTEGBkg2_V1URL, self.MATSONINTEGBkg3_V1URL][which - 1]
+            headers = self.header_fomatsonfleet
         elif self.environment == "PROD":
             url = [self.PRODBkg1_V1URL, self.PRODBkg2_V1URL, self.PRODBkg3_V1URL][which - 1]
             headers = self.header_prod
@@ -117,7 +125,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(1)
             response_1 = requests.post(
-                url, data=self.initial_request, headers=headers, verify=False, timeout=10
+                url, data=self.initial_request, headers=headers, verify=False, timeout=120
             )
             self.logger.info(f"API Request: POST {url} - Status Code: {response_1.status_code}")
             if response_1.status_code == 200:
@@ -135,7 +143,7 @@ class BookingsAPIRequestsV1:
     def get_booking(self):
         try:
             url, headers = self._select_target(1)
-            response_2 = requests.get(url, headers=headers, verify=False, timeout=10)
+            response_2 = requests.get(url, headers=headers, verify=False, timeout=120)
             self.logger.info(f"API Request: GET {url} - Status Code: {response_2.status_code}")
             if response_2.status_code == 200:
                 self.logger.info("Get Booking API request is Successful!")
@@ -152,7 +160,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(1)
             response_3 = requests.post(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=120
             )
             self.logger.info(f"API Request: POST {url} - Status Code: {response_3.status_code}")
             if response_3.status_code == 200:
@@ -170,7 +178,7 @@ class BookingsAPIRequestsV1:
     def get_bookingupdate(self):
         try:
             url, headers = self._select_target(1)
-            response_4 = requests.get(url, headers=headers, verify=False, timeout=10)
+            response_4 = requests.get(url, headers=headers, verify=False, timeout=120)
             self.logger.info(f"API Request: GET {url} - Status Code: {response_4.status_code}")
             if response_4.status_code == 200:
                 self.logger.info("Get Booking API request after Booking update is Successful!")
@@ -189,7 +197,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(2)
             response_5 = requests.put(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=120
             )
             self.logger.info(f"API Request: PUT {url} - Status Code: {response_5.status_code}")
             if response_5.status_code == 200:
@@ -207,7 +215,7 @@ class BookingsAPIRequestsV1:
     def get_new_booking(self):
         try:
             url, headers = self._select_target(2)
-            response_6 = requests.get(url, headers=headers, verify=False, timeout=10)
+            response_6 = requests.get(url, headers=headers, verify=False, timeout=120)
             self.logger.info(f"API Request: GET {url} - Status Code: {response_6.status_code}")
             if response_6.status_code == 200:
                 self.logger.info("Get New Booking API request is Successful!")
@@ -226,7 +234,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(2)
             response_7 = requests.post(
-                url, data=self.unassign_request, headers=headers, verify=False, timeout=10
+                url, data=self.unassign_request, headers=headers, verify=False, timeout=120
             )
             self.logger.info(f"API Request: POST {url} - Status Code: {response_7.status_code}")
             if response_7.status_code == 200:
@@ -245,7 +253,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(3)
             response_9 = requests.put(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=120
             )
             self.logger.info(f"API Request: PUT {url} - Status Code: {response_9.status_code}")
             if response_9.status_code == 200:
@@ -264,7 +272,7 @@ class BookingsAPIRequestsV1:
         try:
             url, headers = self._select_target(3)
             response_10 = requests.delete(
-                url, data=self.update_request, headers=headers, verify=False, timeout=10
+                url, data=self.update_request, headers=headers, verify=False, timeout=120
             )
             self.logger.info(f"API Request: DELETE {url} - Status Code: {response_10.status_code}")
             if response_10.status_code == 200:

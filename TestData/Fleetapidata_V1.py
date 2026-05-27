@@ -19,6 +19,12 @@ class fleetAuthorizationV1:
             "Content-Type": "application/xml",
             "Authorization": "Basic emltcmN3aTJmMTpId014VndyNg=="
         }
+    def MATSONInteg_autho_matsonfleet(self):
+        return {
+            "Content-Type": "application/xml",
+            "Authorization": "Basic bWF0c29uYmtnYXBpOjNBdDUwbmJrZ0BQMQ=="
+        }
+
     def Prod_autho_vcfleet(self):
         return {
             "Content-Type": "application/xml",
